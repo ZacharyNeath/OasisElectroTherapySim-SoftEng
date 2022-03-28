@@ -17,5 +17,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    bool poweredOn = false;
+
+private slots:
+    void powerButton();
 };
 #endif // MAINWINDOW_H
