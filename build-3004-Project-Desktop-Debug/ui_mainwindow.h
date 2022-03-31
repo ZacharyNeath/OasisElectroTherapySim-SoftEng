@@ -81,7 +81,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(783, 443);
+        MainWindow->resize(783, 461);
         MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 52, 54);"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -271,23 +271,24 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         electrodesConnected = new QLabel(centralwidget);
         electrodesConnected->setObjectName(QString::fromUtf8("electrodesConnected"));
-        electrodesConnected->setGeometry(QRect(10, 370, 131, 17));
+        electrodesConnected->setGeometry(QRect(10, 380, 131, 17));
         electrodesConnected->setStyleSheet(QString::fromUtf8("color: rgb(238, 238, 236);"));
         batteryInserted = new QLabel(centralwidget);
         batteryInserted->setObjectName(QString::fromUtf8("batteryInserted"));
-        batteryInserted->setGeometry(QRect(270, 370, 101, 17));
+        batteryInserted->setGeometry(QRect(270, 380, 101, 17));
         batteryInserted->setStyleSheet(QString::fromUtf8("color: rgb(238, 238, 236);"));
         electrodesOn = new QComboBox(centralwidget);
         electrodesOn->addItem(QString());
         electrodesOn->addItem(QString());
+        electrodesOn->addItem(QString());
         electrodesOn->setObjectName(QString::fromUtf8("electrodesOn"));
-        electrodesOn->setGeometry(QRect(150, 370, 72, 25));
+        electrodesOn->setGeometry(QRect(140, 380, 81, 25));
         electrodesOn->setStyleSheet(QString::fromUtf8("background-color: rgb(238, 238, 236);"));
         batteryIn = new QComboBox(centralwidget);
         batteryIn->addItem(QString());
         batteryIn->addItem(QString());
         batteryIn->setObjectName(QString::fromUtf8("batteryIn"));
-        batteryIn->setGeometry(QRect(370, 370, 72, 25));
+        batteryIn->setGeometry(QRect(370, 380, 72, 25));
         batteryIn->setStyleSheet(QString::fromUtf8("background-color: rgb(238, 238, 236);"));
         display = new QListWidget(centralwidget);
         display->setObjectName(QString::fromUtf8("display"));
@@ -351,10 +352,11 @@ public:
         beta->setText(QApplication::translate("MainWindow", "Beta", nullptr));
         hundredHz->setText(QApplication::translate("MainWindow", "100 Hz", nullptr));
         powerIndicator->setText(QApplication::translate("MainWindow", "-", nullptr));
-        electrodesConnected->setText(QApplication::translate("MainWindow", "Electrodes Connected:", nullptr));
+        electrodesConnected->setText(QApplication::translate("MainWindow", "Electrode Connection:", nullptr));
         batteryInserted->setText(QApplication::translate("MainWindow", "Battery Inserted:", nullptr));
-        electrodesOn->setItemText(0, QApplication::translate("MainWindow", "True", nullptr));
-        electrodesOn->setItemText(1, QApplication::translate("MainWindow", "False", nullptr));
+        electrodesOn->setItemText(0, QApplication::translate("MainWindow", "Excellent", nullptr));
+        electrodesOn->setItemText(1, QApplication::translate("MainWindow", "Okay", nullptr));
+        electrodesOn->setItemText(2, QApplication::translate("MainWindow", "Poor", nullptr));
 
         batteryIn->setItemText(0, QApplication::translate("MainWindow", "True", nullptr));
         batteryIn->setItemText(1, QApplication::translate("MainWindow", "False", nullptr));

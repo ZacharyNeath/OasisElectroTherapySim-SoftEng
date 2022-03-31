@@ -68,6 +68,7 @@ void MainWindow::select() {
     if (state == "menu") {
         if (ui->display->currentRow() == 0) {
             state = "session";
+            ui->display->setStyleSheet("background-color: rgb(85, 87, 83);");
             ui->display->clear();
         }
         if (ui->display->currentRow() == 1) {
