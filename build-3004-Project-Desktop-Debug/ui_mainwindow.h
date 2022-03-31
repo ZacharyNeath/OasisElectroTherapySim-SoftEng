@@ -13,8 +13,8 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -73,7 +73,7 @@ public:
     QLabel *batteryInserted;
     QComboBox *electrodesOn;
     QComboBox *batteryIn;
-    QGraphicsView *display;
+    QListWidget *display;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -289,7 +289,7 @@ public:
         batteryIn->setObjectName(QString::fromUtf8("batteryIn"));
         batteryIn->setGeometry(QRect(370, 370, 72, 25));
         batteryIn->setStyleSheet(QString::fromUtf8("background-color: rgb(238, 238, 236);"));
-        display = new QGraphicsView(centralwidget);
+        display = new QListWidget(centralwidget);
         display->setObjectName(QString::fromUtf8("display"));
         display->setGeometry(QRect(370, 90, 401, 121));
         display->setStyleSheet(QString::fromUtf8("background-color: rgb(85, 87, 83);"));

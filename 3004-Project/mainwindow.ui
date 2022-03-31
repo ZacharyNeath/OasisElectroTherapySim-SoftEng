@@ -791,7 +791,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QGraphicsView" name="display">
+   <widget class="QListWidget" name="display">
     <property name="geometry">
      <rect>
       <x>370</x>
