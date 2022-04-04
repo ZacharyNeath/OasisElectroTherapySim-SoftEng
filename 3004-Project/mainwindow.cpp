@@ -35,7 +35,7 @@ void MainWindow::powerOn(){
     // Encapsulate all powering on stuff here
     // Probably just turn on basic stuff on allow the user
     // To choose between the record window and doing a session
-    ui->powerIndicator->setStyleSheet("color: rgb(138, 226, 52)");
+    ui->powerIndicatorLabel->setStyleSheet("color: rgb(138, 226, 52)");
     ui->display->setStyleSheet("background-color: rgb(255, 255, 255);");
 
     displayMenu();
@@ -49,7 +49,7 @@ void MainWindow::powerOff(){
     // Encapsulate all powering off stuff
     // updates UI
     // Ends program
-    ui -> powerIndicator->setStyleSheet("color: rgb(85, 87, 83);");
+    ui -> powerIndicatorLabel->setStyleSheet("color: rgb(85, 87, 83);");
     clearMenu();
     clearGraph();
 
@@ -178,15 +178,15 @@ void MainWindow::clearUI(){
 
 //Helper to form all connections
 void MainWindow::connectButtons() {
-    connect(ui -> intUp, SIGNAL(pressed()), this, SLOT(upPressed()));
-    connect(ui -> intDown, SIGNAL(pressed()), this, SLOT(downPressed()));
+    connect(ui -> intUpButton, SIGNAL(pressed()), this, SLOT(upPressed()));
+    connect(ui -> intDownButton, SIGNAL(pressed()), this, SLOT(downPressed()));
     connect(ui -> powerButton, SIGNAL(pressed()), this, SLOT(powerPressed()));
-    connect(ui -> confirm, SIGNAL(pressed()), this, SLOT(confirmPressed()));
+    connect(ui -> confirmButton, SIGNAL(pressed()), this, SLOT(confirmPressed()));
 
-    connect(ui -> intUp, SIGNAL(released()), this, SLOT(buttonRelease()));
-    connect(ui -> intDown, SIGNAL(released()), this, SLOT(buttonRelease()));
+    connect(ui -> intUpButton, SIGNAL(released()), this, SLOT(buttonRelease()));
+    connect(ui -> intDownButton, SIGNAL(released()), this, SLOT(buttonRelease()));
     connect(ui -> powerButton, SIGNAL(released()), this, SLOT(buttonRelease()));
-    connect(ui -> confirm, SIGNAL(released()), this, SLOT(buttonRelease()));
+    connect(ui -> confirmButton, SIGNAL(released()), this, SLOT(buttonRelease()));
 }
 
 //Resets all button variables and timers when processing of a button is finished

@@ -8,7 +8,6 @@
     <y>0</y>
     <width>783</width>
     <height>461</height>
-
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +33,7 @@
      <string>Power</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="intUp">
+   <widget class="QPushButton" name="intUpButton">
     <property name="geometry">
      <rect>
       <x>550</x>
@@ -50,7 +49,7 @@
      <string>UP</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="intDown">
+   <widget class="QPushButton" name="intDownButton">
     <property name="geometry">
      <rect>
       <x>550</x>
@@ -66,7 +65,7 @@
      <string>DOWN</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="confirm">
+   <widget class="QPushButton" name="confirmButton">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -82,7 +81,7 @@
      <string>Confirm</string>
     </property>
    </widget>
-   <widget class="QLabel" name="intensity">
+   <widget class="QLabel" name="intensityButton">
     <property name="geometry">
      <rect>
       <x>570</x>
@@ -103,7 +102,7 @@
      <string>INT</string>
     </property>
    </widget>
-   <widget class="QLabel" name="twentyMin">
+   <widget class="QLabel" name="twentyMinLabel">
     <property name="geometry">
      <rect>
       <x>133</x>
@@ -119,7 +118,7 @@
      <string>20 Minutes</string>
     </property>
    </widget>
-   <widget class="QLabel" name="fortyFiveMin">
+   <widget class="QLabel" name="fortyFiveMinLabel">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -151,7 +150,7 @@
      <string>3 Hours</string>
     </property>
    </widget>
-   <widget class="QLabel" name="userDesig">
+   <widget class="QLabel" name="userDesigLabel">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -167,7 +166,7 @@
      <string>User Designated</string>
     </property>
    </widget>
-   <widget class="QLabel" name="cesOut">
+   <widget class="QLabel" name="cesOutLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -183,7 +182,7 @@
      <string>CES Out.</string>
     </property>
    </widget>
-   <widget class="QLabel" name="audioIn">
+   <widget class="QLabel" name="audioInLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -199,7 +198,7 @@
      <string>Audio In.</string>
     </property>
    </widget>
-   <widget class="QLabel" name="left">
+   <widget class="QLabel" name="leftLabel">
     <property name="geometry">
      <rect>
       <x>570</x>
@@ -215,7 +214,7 @@
      <string>L</string>
     </property>
    </widget>
-   <widget class="QLabel" name="right">
+   <widget class="QLabel" name="rightLabel">
     <property name="geometry">
      <rect>
       <x>660</x>
@@ -231,7 +230,7 @@
      <string>R</string>
     </property>
    </widget>
-   <widget class="QLabel" name="one">
+   <widget class="QLabel" name="oneLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -247,7 +246,7 @@
      <string>|1|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="two">
+   <widget class="QLabel" name="twoLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -263,7 +262,7 @@
      <string>|2|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="three">
+   <widget class="QLabel" name="threeLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -279,7 +278,7 @@
      <string>|3|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="four">
+   <widget class="QLabel" name="fourLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -295,7 +294,7 @@
      <string>|4|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="five">
+   <widget class="QLabel" name="fiveLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -311,7 +310,7 @@
      <string>|5|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="six">
+   <widget class="QLabel" name="sixLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -327,7 +326,7 @@
      <string>|6|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="seven">
+   <widget class="QLabel" name="sevenLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -343,7 +342,7 @@
      <string>|7|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="eight">
+   <widget class="QLabel" name="eightLabel">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -359,7 +358,7 @@
      <string>|8|</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcs">
+   <widget class="QLabel" name="tdcsLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -375,7 +374,7 @@
      <string>tDCS</string>
     </property>
    </widget>
-   <widget class="QLabel" name="shortPulse">
+   <widget class="QLabel" name="shortPulseLabel">
     <property name="geometry">
      <rect>
       <x>540</x>
@@ -391,7 +390,7 @@
      <string>Short-Pulse</string>
     </property>
    </widget>
-   <widget class="QLabel" name="dutyCycle">
+   <widget class="QLabel" name="dutyCycleLabel">
     <property name="geometry">
      <rect>
       <x>620</x>
@@ -407,7 +406,7 @@
      <string>50% Duty Cycle</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsPlusTwo">
+   <widget class="QLabel" name="tdcsPlusTwoLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -423,7 +422,7 @@
      <string>+2</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsTwo">
+   <widget class="QLabel" name="tdcsTwoLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -439,7 +438,7 @@
      <string>2.00</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsOne">
+   <widget class="QLabel" name="tdcsOneLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -455,7 +454,7 @@
      <string>1.00</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsThreeQuarters">
+   <widget class="QLabel" name="tdcsThreeQuartersLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -471,7 +470,7 @@
      <string>0.75</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsHalf">
+   <widget class="QLabel" name="tdcsHalfLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -487,7 +486,7 @@
      <string>0.50</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsQuarter">
+   <widget class="QLabel" name="tdcsQuarterLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -503,7 +502,7 @@
      <string>0.25</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsPlusOne">
+   <widget class="QLabel" name="tdcsPlusOneLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -519,7 +518,7 @@
      <string>+1</string>
     </property>
    </widget>
-   <widget class="QLabel" name="tdcsOneAndHalf">
+   <widget class="QLabel" name="tdcsOneAndHalfLabel">
     <property name="geometry">
      <rect>
       <x>290</x>
@@ -535,7 +534,7 @@
      <string>1.50</string>
     </property>
    </widget>
-   <widget class="QLabel" name="met">
+   <widget class="QLabel" name="metLabel">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -551,7 +550,7 @@
      <string>MET</string>
     </property>
    </widget>
-   <widget class="QLabel" name="subDelta">
+   <widget class="QLabel" name="subDeltaLabel">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -567,7 +566,7 @@
      <string>Sub-Delta</string>
     </property>
    </widget>
-   <widget class="QLabel" name="delta">
+   <widget class="QLabel" name="deltaLabel">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -583,7 +582,7 @@
      <string>Delta</string>
     </property>
    </widget>
-   <widget class="QLabel" name="theta">
+   <widget class="QLabel" name="thetaLabel">
     <property name="geometry">
      <rect>
       <x>280</x>
@@ -599,7 +598,7 @@
      <string>Theta</string>
     </property>
    </widget>
-   <widget class="QLabel" name="alpha">
+   <widget class="QLabel" name="alphaLabel">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -615,7 +614,7 @@
      <string>Alpha</string>
     </property>
    </widget>
-   <widget class="QLabel" name="smr">
+   <widget class="QLabel" name="smrLabel">
     <property name="geometry">
      <rect>
       <x>380</x>
@@ -631,7 +630,7 @@
      <string>SMR</string>
     </property>
    </widget>
-   <widget class="QLabel" name="beta">
+   <widget class="QLabel" name="betaLabel">
     <property name="geometry">
      <rect>
       <x>430</x>
@@ -647,7 +646,7 @@
      <string>Beta</string>
     </property>
    </widget>
-   <widget class="QLabel" name="hundredHz">
+   <widget class="QLabel" name="hundredHzLabel">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -663,7 +662,7 @@
      <string>100 Hz</string>
     </property>
    </widget>
-   <widget class="QLabel" name="powerIndicator">
+   <widget class="QLabel" name="powerIndicatorLabel">
     <property name="geometry">
      <rect>
       <x>710</x>
@@ -686,7 +685,7 @@
      <string>-</string>
     </property>
    </widget>
-   <widget class="Line" name="line">
+   <widget class="Line" name="comboBoxLine">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -714,12 +713,11 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="electrodesConnected">
+   <widget class="QLabel" name="electrodesConnectedLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>380</y>
-
       <width>131</width>
       <height>17</height>
      </rect>
@@ -731,7 +729,7 @@
      <string>Electrode Connection:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="batteryInserted">
+   <widget class="QLabel" name="batteryInsertedLabel">
     <property name="geometry">
      <rect>
       <x>270</x>
@@ -747,7 +745,7 @@
      <string>Battery Inserted:</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="electrodesOn">
+   <widget class="QComboBox" name="electrodesComboBox">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -775,7 +773,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QComboBox" name="batteryIn">
+   <widget class="QComboBox" name="batteryInComboBox">
     <property name="geometry">
      <rect>
       <x>370</x>
