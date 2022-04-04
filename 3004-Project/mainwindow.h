@@ -17,9 +17,18 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    //Private Functions
+    void connectButtons(); //Connects all the device buttons
+
+    //Private Variables
     bool poweredOn = false;
+    QString state = "off";
 
 private slots:
     void powerButton();
+    void up();
+    void down();
+    void select();
 };
 #endif // MAINWINDOW_H

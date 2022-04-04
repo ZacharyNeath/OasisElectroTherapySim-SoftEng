@@ -7,7 +7,8 @@
     <x>0</x>
     <y>0</y>
     <width>783</width>
-    <height>443</height>
+    <height>461</height>
+
    </rect>
   </property>
   <property name="windowTitle">
@@ -717,7 +718,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>370</y>
+      <y>380</y>
+
       <width>131</width>
       <height>17</height>
      </rect>
@@ -726,14 +728,14 @@
      <string notr="true">color: rgb(238, 238, 236);</string>
     </property>
     <property name="text">
-     <string>Electrodes Connected:</string>
+     <string>Electrode Connection:</string>
     </property>
    </widget>
    <widget class="QLabel" name="batteryInserted">
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>370</y>
+      <y>380</y>
       <width>101</width>
       <height>17</height>
      </rect>
@@ -748,9 +750,9 @@
    <widget class="QComboBox" name="electrodesOn">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>370</y>
-      <width>72</width>
+      <x>140</x>
+      <y>380</y>
+      <width>81</width>
       <height>25</height>
      </rect>
     </property>
@@ -759,12 +761,17 @@
     </property>
     <item>
      <property name="text">
-      <string>True</string>
+      <string>Excellent</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>False</string>
+      <string>Okay</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Poor</string>
      </property>
     </item>
    </widget>
@@ -772,7 +779,7 @@
     <property name="geometry">
      <rect>
       <x>370</x>
-      <y>370</y>
+      <y>380</y>
       <width>72</width>
       <height>25</height>
      </rect>
@@ -791,7 +798,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QGraphicsView" name="display">
+   <widget class="QListWidget" name="display">
     <property name="geometry">
      <rect>
       <x>370</x>
