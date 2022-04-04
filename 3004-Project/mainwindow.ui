@@ -103,6 +103,9 @@
     </property>
    </widget>
    <widget class="QLabel" name="twentyMinLabel">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>133</x>

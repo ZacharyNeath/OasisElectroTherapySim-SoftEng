@@ -21,15 +21,15 @@ public:
     void updateStatus();
 
     //STATE CHANGES
-    void powerOn();
+    void powerOn(); //DONE
     void recordView();
-    void enterSessionSelect();
+    void enterSessionSelect(); //DONE
     void connectionTest();
     void startSession();
     void endSession();
     void pauseSession();
     void batteryChange();
-    void powerOff();
+    void powerOff(); //DONE
 
     //DATABASE MANIP
     QVector<Session*> getRecords();
@@ -46,7 +46,7 @@ public:
     int getSessionRemainder();
     QTimer* getSessionTimer();
 
-    //GETTERS
+    //GETTERS //DONE
     DeviceState getState();
     double getBatteryLevel();
     int getConnectionLevel();

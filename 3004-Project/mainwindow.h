@@ -26,15 +26,25 @@ public:
     ~MainWindow();
 
 private:
+//Follow below for how we'll navigate session info
+//    //Imagine these vars are class vars
+//    int currentGroup = 0;
+//    QLabel** groups = new QLabel*[4];
+
+//    //Imagine this is in the function to navigate
+//    groups[0] = ui->twentyMinLabel;
+//    //...
+
+//    currentGroup+=1;
+//    groups[currentGroup%4]->setCurrentStyleSheet("Set colour");
     Ui::MainWindow *ui;
     Device* device;
     QTimer* buttonTimer;
     int buttonHeldTime;
-    bool buttonPressed;
     bool buttonReleased;
 
     //STATE UPDATES
-    void powerOn();
+    void powerOn(); //DONE
     void powerOff();
     void softOff();
     void enterSessionSelect();
@@ -48,19 +58,19 @@ private:
     Session* getUserSession();
 
     //UI UPDATES
-    void displayBattery();
+    void displayBattery(); //DONE
     void displayIntensity();
-    void colourGraphNumber(const int);
+    void colourGraphNumber(const int); //DONE
     void displayRecords(QVector<Session*>*);
     void displaySession(Session*);
-    void displayMenu();
-    void clearGraph();
-    void clearMenu();
+    void displayMenu(); //DONE
+    void clearGraph(); //DONE
+    void clearMenu(); //DONE
     void clearUI();
 
     //HELPER FUNCTIONS
-    void connectButtons();
-    void buttonReset();
+    void connectElements();
+    void buttonReset(); //DONE
 
 
 private slots:
@@ -80,7 +90,7 @@ private slots:
     void confirmHeld();
 
     //RELEASED
-    void buttonRelease();
+    void buttonRelease(); //DONE
 
     //COMBO UPDATE
     void connectionUpdate();

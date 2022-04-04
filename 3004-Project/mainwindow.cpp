@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     buttonHeldTime = 0;
-    buttonPressed = false;
     buttonReleased = false;
 
     device = new Device();
@@ -231,7 +230,7 @@ void MainWindow::clearUI(){
 //HELPERS
 
 //Helper to form all connections
-void MainWindow::connectButtons() {
+void MainWindow::connectElements() {
     connect(ui -> intUpButton, SIGNAL(pressed()), this, SLOT(upPressed()));
     connect(ui -> intDownButton, SIGNAL(pressed()), this, SLOT(downPressed()));
     connect(ui -> powerButton, SIGNAL(pressed()), this, SLOT(powerPressed()));
@@ -245,7 +244,6 @@ void MainWindow::connectButtons() {
 
 //Resets all button variables and timers when processing of a button is finished
 void MainWindow::buttonReset(){
-    buttonPressed = false;
     buttonReleased = false;
     buttonHeldTime = 0;
     buttonTimer->stop();
@@ -278,7 +276,7 @@ void MainWindow::upPressed() {
             //If in session it increases intensity
     if(!buttonReleased && !(buttonTimer->isActive())){
         connect(buttonTimer, &QTimer::timeout, this, &MainWindow::upPressed);
-        buttonTimer->start(100);
+        buttonTimer->start(20);
         return;
     }
 
@@ -287,13 +285,13 @@ void MainWindow::upPressed() {
     }
 
     //Consider button "held" after 2 seconds
-    if(buttonHeldTime>=20){
+    if(buttonHeldTime>=100){
         buttonReset();
         upHeld();
     }
 
     //If button wasn't held proceed as normal
-    if(buttonReleased && buttonHeldTime < 20){
+    if(buttonReleased && buttonHeldTime < 100){
         buttonReset();
         if(device->getState()==DeviceState::MENU || device->getState()==DeviceState::RECORDS){
             if(ui->display->currentRow()!=0){
