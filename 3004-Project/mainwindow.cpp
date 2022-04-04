@@ -45,6 +45,7 @@ void MainWindow::powerButton() {
     else {
         ui -> powerIndicator->setStyleSheet("color: rgb(85, 87, 83);");
         ui->display->setStyleSheet("background-color: rgb(85, 87, 83);");
+
         ui->display->clear();
 
         poweredOn = false;
@@ -75,5 +76,6 @@ void MainWindow::select() {
             state = "records";
             ui->display->clear();
         }
+
     }
 }
