@@ -68,6 +68,7 @@ void MainWindow::softOff(){
 void MainWindow::enterSessionSelect(){
     // Update display
     clearMenu();
+    clearGraph();
     device->enterSessionSelect();
 }
 
@@ -119,6 +120,12 @@ void MainWindow::displayBattery(){
     //Query device for battery level
     // The graph is numbers 1-8 so:
         //numToLightUp = floor(batteryLevel/12.5)
+    double battery = device->getBatteryLevel();
+    int numToLight = (int)(ceil((battery/12.5)));
+
+    for(int i = 1; i<=numToLight; i++){
+        colourGraphNumber(i);
+    }
 }
 
 //Update graph to show current intensity
@@ -128,7 +135,47 @@ void MainWindow::displayIntensity(){
 
 //Lights up a specific number of the graph
 void MainWindow::colourGraphNumber(const int num){
+    QString colour;
+    QLabel* label;
 
+    switch(num){
+        case 1:
+            label = ui->oneLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 2:
+            label = ui->twoLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 3:
+            label = ui->threeLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 4:
+            label = ui->fourLabel;
+            colour = "color: rgb(253,253,0);";
+            break;
+        case 5:
+            label = ui->fiveLabel;
+            colour = "color: rgb(253,253,0);";
+            break;
+        case 6:
+            label = ui->sixLabel;
+            colour = "color: rgb(253,253,0);";
+            break;
+        case 7:
+            label = ui->sevenLabel;
+            colour = "color: rgb(253,0,0);";
+            break;
+        case 8:
+            label = ui->eightLabel;
+            colour = "color: rgb(253,0,0);";
+            break;
+        default:
+            return;
+    }
+
+    label->setStyleSheet(colour);
 }
 
 //Displays current records on UI
@@ -157,7 +204,14 @@ void MainWindow::displayMenu(){
 
 //Turns off the lighting on all numbers on the graph
 void MainWindow::clearGraph(){
-
+    ui->oneLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->twoLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->threeLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->fourLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->fiveLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->sixLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->sevenLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->eightLabel->setStyleSheet("color: rgb(85, 87, 83);");
 }
 
 //Clears record window
