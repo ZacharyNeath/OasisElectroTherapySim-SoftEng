@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     device = new Device();
     buttonTimer = new QTimer(this);
 
-    connectButtons();
+    connectElements();
+    sessionSelectInitialization();
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +52,8 @@ void MainWindow::powerOff(){
     ui -> powerIndicatorLabel->setStyleSheet("color: rgb(85, 87, 83);");
     clearMenu();
     clearGraph();
+    clearSessions();
+    clearGroup();
 
     device->powerOff();
 }
@@ -69,6 +72,29 @@ void MainWindow::enterSessionSelect(){
     clearMenu();
     clearGraph();
     device->enterSessionSelect();
+}
+
+//Initializes Session Selection Info
+void MainWindow::sessionSelectInitialization() {
+    int currentGroup = 0;
+    int currentSession = 0;
+    QLabel** groups = new QLabel*[4];
+    QLabel** sessions = new QLabel*[8];
+
+    //Assigns labels to the groups array
+    groups[0] = ui->twentyMinLabel;
+    groups[1] = ui->fortyFiveMinLabel;
+    groups[2] = ui->threeHour;
+    groups[3] = ui->userDesigLabel;
+
+    sessions[0] = ui->metLabel;
+    sessions[1] = ui->subDeltaLabel;
+    sessions[2] = ui->deltaLabel;
+    sessions[3] = ui->thetaLabel;
+    sessions[4] = ui->alphaLabel;
+    sessions[5] = ui->smrLabel;
+    sessions[6] = ui->betaLabel;
+    sessions[7] = ui->hundredHzLabel;
 }
 
 //Tells the device to enter Session state
@@ -122,7 +148,7 @@ void MainWindow::displayBattery(){
     double battery = device->getBatteryLevel();
     int numToLight = (int)(ceil((battery/12.5)));
 
-    for(int i = 1; i<=numToLight; i++){
+    for(int i = 0; i<=numToLight; i++){
         colourGraphNumber(i);
     }
 }
@@ -138,37 +164,121 @@ void MainWindow::colourGraphNumber(const int num){
     QLabel* label;
 
     switch(num){
-        case 1:
+        case 0:
             label = ui->oneLabel;
             colour = "color: rgb(0,253,0);";
             break;
-        case 2:
+        case 1:
             label = ui->twoLabel;
             colour = "color: rgb(0,253,0);";
             break;
-        case 3:
+        case 2:
             label = ui->threeLabel;
             colour = "color: rgb(0,253,0);";
             break;
-        case 4:
+        case 3:
             label = ui->fourLabel;
             colour = "color: rgb(253,253,0);";
             break;
-        case 5:
+        case 4:
             label = ui->fiveLabel;
             colour = "color: rgb(253,253,0);";
             break;
-        case 6:
+        case 5:
             label = ui->sixLabel;
             colour = "color: rgb(253,253,0);";
             break;
-        case 7:
+        case 6:
             label = ui->sevenLabel;
             colour = "color: rgb(253,0,0);";
             break;
-        case 8:
+        case 7:
             label = ui->eightLabel;
             colour = "color: rgb(253,0,0);";
+            break;
+        default:
+            return;
+    }
+
+    label->setStyleSheet(colour);
+}
+
+//Lights up a specific session
+void MainWindow::colourSession(const int num){
+    QString colour;
+    QLabel* label;
+    QLabel* frequency;
+
+    switch(num){
+        case 0:
+            label = ui->metLabel;
+            frequency = ui->shortPulseLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 1:
+            label = ui->subDeltaLabel;
+            frequency = ui->dutyCycleLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 2:
+            label = ui->deltaLabel;
+            frequency = ui->shortPulseLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 3:
+            label = ui->thetaLabel;
+            frequency = ui->shortPulseLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 4:
+            label = ui->alphaLabel;
+            frequency = ui->shortPulseLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 5:
+            label = ui->smrLabel;
+            frequency = ui->shortPulseLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 6:
+            label = ui->betaLabel;
+            frequency = ui->shortPulseLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 7:
+            label = ui->hundredHzLabel;
+            frequency = ui->shortPulseLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        default:
+            return;
+    }
+
+    label->setStyleSheet(colour);
+    frequency->setStyleSheet(colour);
+}
+
+//Lights up a specific group
+void MainWindow::colourGroup(const int num){
+    QString colour;
+    QLabel* label;
+
+    switch(num){
+        case 0:
+            label = ui->twentyMinLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 1:
+            label = ui->fortyFiveMinLabel;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 2:
+            label = ui->threeHour;
+            colour = "color: rgb(0,253,0);";
+            break;
+        case 3:
+            label = ui->userDesigLabel;
+            colour = "color: rgb(0,253,0);";
             break;
         default:
             return;
@@ -211,6 +321,29 @@ void MainWindow::clearGraph(){
     ui->sixLabel->setStyleSheet("color: rgb(85, 87, 83);");
     ui->sevenLabel->setStyleSheet("color: rgb(85, 87, 83);");
     ui->eightLabel->setStyleSheet("color: rgb(85, 87, 83);");
+}
+
+//Turns off the lighting of the session
+void MainWindow::clearSessions(){
+    ui->metLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->subDeltaLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->deltaLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->thetaLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->alphaLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->smrLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->betaLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->hundredHzLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->shortPulseLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->dutyCycleLabel->setStyleSheet("color: rgb(85, 87, 83);");
+}
+
+
+//Turns off the lighting of the group
+void MainWindow::clearGroup(){
+    ui->twentyMinLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->fortyFiveMinLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->threeHour->setStyleSheet("color: rgb(85, 87, 83);");
+    ui->userDesigLabel->setStyleSheet("color: rgb(85, 87, 83);");
 }
 
 //Clears record window
@@ -298,6 +431,15 @@ void MainWindow::upPressed() {
                 ui->display->setCurrentRow(ui->display->currentRow()-1);
             }
         }
+        if(device->getState()==DeviceState::SESSION_SELECT) {
+            if(currentSession<sizeof(sessions)-1) {
+                currentSession+=1;
+                clearGraph();
+                colourGraphNumber(currentSession);
+                clearSessions();
+                colourSession(currentSession);
+            }
+        }
     }
 }
 
@@ -332,6 +474,15 @@ void MainWindow::downPressed() {
                 ui->display->setCurrentRow(ui->display->currentRow()+1);
             }
         }
+        if(device->getState()==DeviceState::SESSION_SELECT) {
+            if(currentSession>0) {
+                currentSession-=1;
+                clearGraph();
+                colourGraphNumber(currentSession);
+                clearSessions();
+                colourSession(currentSession);
+            }
+        }
     }
 }
 
@@ -363,6 +514,26 @@ void MainWindow::powerPressed(){
     //If button wasn't held proceed as normal
     if(buttonReleased && buttonHeldTime < 100){
         buttonReset();
+        if(device->getState()==DeviceState::SESSION_SELECT) {
+            if(currentGroup<(sizeof(groups)/2)) {
+                currentGroup+=1;
+                clearGroup();
+                colourGroup(currentGroup);
+                colourSession(currentSession);
+                if (currentGroup == (sizeof(groups)/2)-1) {
+                    clearGraph();
+                    clearSessions();
+                    currentSession = -1;
+                }
+            }
+            if(currentGroup==(sizeof(groups)/2)) {
+                currentGroup = 0;
+                currentSession = 0;
+                clearGroup();
+                colourGroup(currentGroup);
+                colourSession(currentSession);
+            }
+        }
     }
 }
 
@@ -395,7 +566,11 @@ void MainWindow::confirmPressed() {
             //If session mode selected
             if (ui->display->currentRow() == 0) {
                 enterSessionSelect();
-
+                currentGroup = 0;
+                currentSession = 0;
+                colourGraphNumber(currentSession);
+                colourGroup(currentGroup);
+                colourSession(currentSession);
             }
             //If record mode is selected
             else if (ui->display->currentRow() == 1) {
@@ -403,7 +578,6 @@ void MainWindow::confirmPressed() {
                 ui->display->clear();
             }
         }
-
     }
 
 }

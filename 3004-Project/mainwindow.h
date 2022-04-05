@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QTimer>
+#include <QLabel>
 #include <QDateTime>
 #include <QVector>
 #include <QtDebug>
@@ -42,6 +43,10 @@ private:
     QTimer* buttonTimer;
     int buttonHeldTime;
     bool buttonReleased;
+    int currentGroup;
+    int currentSession;
+    QLabel** groups;
+    QLabel** sessions;
 
     //STATE UPDATES
     void powerOn(); //DONE
@@ -61,16 +66,21 @@ private:
     void displayBattery(); //DONE
     void displayIntensity();
     void colourGraphNumber(const int); //DONE
+    void colourSession(const int); //DONE
+    void colourGroup(const int); //DONE
     void displayRecords(QVector<Session*>*);
     void displaySession(Session*);
     void displayMenu(); //DONE
     void clearGraph(); //DONE
+    void clearSessions(); //DONE
+    void clearGroup(); //DONE
     void clearMenu(); //DONE
     void clearUI();
 
     //HELPER FUNCTIONS
     void connectElements();
     void buttonReset(); //DONE
+    void sessionSelectInitialization(); //DONE
 
 
 private slots:
