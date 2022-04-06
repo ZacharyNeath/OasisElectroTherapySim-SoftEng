@@ -24,7 +24,7 @@ public:
     void powerOn(); //DONE
     void recordView();
     void enterSessionSelect(); //DONE
-    void connectionTest();
+    void connectionTest(); //DONE
     void startSession();
     void endSession();
     void pauseSession();
@@ -39,7 +39,7 @@ public:
     bool storeSession();
 
     //SESSION MANIP
-    void createSession(const QString&, const QString&);
+    void createSession(int, int); //DONE
     void increaseIntensity();
     void decreaseIntensity();
     void turnOnRecording();

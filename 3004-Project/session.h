@@ -34,9 +34,6 @@ public:
     void setIntensity(int);
     void setRecording();
 
-    //DEBUGGING
-    void print();
-
 private:
     QTimer* timer;
     QDateTime dateTime;

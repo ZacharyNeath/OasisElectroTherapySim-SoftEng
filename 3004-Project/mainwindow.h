@@ -10,6 +10,7 @@
 #include <QDateTime>
 #include <QVector>
 #include <QtDebug>
+#include <QThread>
 
 #include <device.h>
 #include <session.h>
@@ -27,17 +28,6 @@ public:
     ~MainWindow();
 
 private:
-//Follow below for how we'll navigate session info
-//    //Imagine these vars are class vars
-//    int currentGroup = 0;
-//    QLabel** groups = new QLabel*[4];
-
-//    //Imagine this is in the function to navigate
-//    groups[0] = ui->twentyMinLabel;
-//    //...
-
-//    currentGroup+=1;
-//    groups[currentGroup%4]->setCurrentStyleSheet("Set colour");
     Ui::MainWindow *ui;
     Device* device;
     QTimer* buttonTimer;

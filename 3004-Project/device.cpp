@@ -61,6 +61,7 @@ void Device::endSession(){
 //Tells device it’s testing connection
 void Device::connectionTest(){
     //enter connection test state
+    state = DeviceState::CONNECTION_TEST;
 }
 
 //Pauses current session
@@ -115,9 +116,81 @@ bool Device::storeSession(){
 //SESSION MANIP
 
 //Creates a session
-void Device::createSession(const QString&, const QString&){
+void Device::createSession(int selectedGroup, int selectedType){
     //Create session object
         //if given string is default value it is a USER DEFINED session
+    QString groupString;
+    QString typeString;
+    int duration;
+    int frequency;
+    bool ces = false;
+
+    switch(selectedGroup){
+        case 0:
+            groupString = "20 Minutes";
+            duration = 20;
+            break;
+        case 1:
+            groupString = "45 Minutes";
+            duration = 45;
+            break;
+        case 2:
+            groupString = "3 Hours";
+            duration = 180;
+            break;
+        case 3:
+            groupString = "User Designated";
+            duration = -1;
+            break;
+        default:
+            return;
+    }
+
+    switch(selectedType){
+        case 0:
+            typeString = "MET";
+            frequency = 3;
+            break;
+        case 1:
+            typeString = "Sub Delta";
+            frequency = 3;
+            break;
+        case 2:
+            typeString = "Delta";
+            frequency = 5;
+            break;
+        case 3:
+            typeString = "Theta";
+            frequency = 8;
+            break;
+        case 4:
+            typeString = "Alpha";
+            frequency = 11;
+            break;
+        case 5:
+            typeString = "SMR";
+            frequency = 15;
+            break;
+        case 6:
+            typeString = "Beta";
+            frequency = 22;
+            break;
+        case 7:
+            typeString = "100 Hz";
+            frequency = 100;
+            break;
+        default:
+            return;
+    }
+
+    qInfo("\nCreating session:");
+    qInfo("Group:     %s", qUtf8Printable(groupString));
+    qInfo("Type:      %s", qUtf8Printable(typeString));
+    qInfo("Duration:  %d minutes", duration);
+    qInfo("Frequency: %dHz", frequency);
+    qInfo("CES:       %s\n", ces?"True":"False");
+
+    currentSession = new Session(groupString, typeString, duration, frequency, ces);
 }
 
 //Increases session intensity by 1

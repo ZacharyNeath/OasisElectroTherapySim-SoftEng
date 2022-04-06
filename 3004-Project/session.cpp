@@ -102,11 +102,3 @@ void Session::setRecording(){
 }
 
 //END SETTERS
-
-
-//PRINTING SESSION INFOR FOR DEBUGGING
-void Session::print() {
-    qInfo("Group: %s", qUtf8Printable(group));
-    qInfo("Session Type: %s", qUtf8Printable(type));
-    qInfo("Duration: %d minutes", duration);
-}

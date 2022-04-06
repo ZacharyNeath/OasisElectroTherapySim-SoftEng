@@ -114,7 +114,22 @@ void MainWindow::endSession(){
 void MainWindow::connectionTest(){
     //tells device to enter connection test mode
     //Update UI to reflect the current test
-
+    device->connectionTest();
+    clearGraph();
+    if (ui->electrodesComboBox->currentText() == "Excellent") {
+        colourGraphNumber(0);
+        colourGraphNumber(1);
+        colourGraphNumber(2);
+    }
+    else if (ui->electrodesComboBox->currentText() == "Okay") {
+        colourGraphNumber(3);
+        colourGraphNumber(4);
+        colourGraphNumber(5);
+    }
+    else if (ui->electrodesComboBox->currentText() == "Poor") {
+        colourGraphNumber(6);
+        colourGraphNumber(7);
+    }
 }
 
 //END STATE UPDATES
@@ -373,6 +388,9 @@ void MainWindow::connectElements() {
     connect(ui -> intDownButton, SIGNAL(released()), this, SLOT(buttonRelease()));
     connect(ui -> powerButton, SIGNAL(released()), this, SLOT(buttonRelease()));
     connect(ui -> confirmButton, SIGNAL(released()), this, SLOT(buttonRelease()));
+
+    //connect(ui -> electrodesComboBox, SIGNAL(), this, SLOT());
+    //connect(ui -> batteryInComboBox, SIGNAL(), this, SLOT());
 }
 
 //Resets all button variables and timers when processing of a button is finished
@@ -532,6 +550,7 @@ void MainWindow::powerPressed(){
                 clearGroup();
                 colourGroup(currentGroup);
                 colourSession(currentSession);
+                colourGraphNumber(0);
             }
         }
     }
@@ -571,12 +590,19 @@ void MainWindow::confirmPressed() {
                 colourGraphNumber(currentSession);
                 colourGroup(currentGroup);
                 colourSession(currentSession);
+                return;
             }
             //If record mode is selected
             else if (ui->display->currentRow() == 1) {
                 device->recordView();
                 ui->display->clear();
+                return;
             }
+        }
+        if (device->getState()==DeviceState::SESSION_SELECT) {
+            device->Device::createSession(currentGroup, currentSession);
+            connectionTest();
+            return;
         }
     }
 
