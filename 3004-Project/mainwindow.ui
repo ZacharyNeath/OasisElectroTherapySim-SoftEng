@@ -811,6 +811,9 @@
     <property name="styleSheet">
      <string notr="true">background-color: rgb(85, 87, 83);</string>
     </property>
+    <property name="isWrapping" stdset="0">
+     <bool>false</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

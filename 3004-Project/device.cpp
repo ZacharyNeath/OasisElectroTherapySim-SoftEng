@@ -123,7 +123,7 @@ void Device::createSession(int selectedGroup, int selectedType){
     QString typeString;
     int duration;
     int frequency;
-    bool ces = false;
+    bool ces = true;
 
     switch(selectedGroup){
         case 0:
@@ -153,6 +153,7 @@ void Device::createSession(int selectedGroup, int selectedType){
             break;
         case 1:
             typeString = "Sub Delta";
+            ces = false;
             frequency = 3;
             break;
         case 2:
@@ -188,7 +189,7 @@ void Device::createSession(int selectedGroup, int selectedType){
     qInfo("Type:      %s", qUtf8Printable(typeString));
     qInfo("Duration:  %d minutes", duration);
     qInfo("Frequency: %dHz", frequency);
-    qInfo("CES:       %s\n", ces?"True":"False");
+    qInfo("CES:       %s\n", ces?"Short-Pulse":"50% Duty Cycle");
 
     currentSession = new Session(groupString, typeString, duration, frequency, ces);
 }

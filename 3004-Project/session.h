@@ -23,6 +23,7 @@ public:
     QString getType();
     QTimer* getTimer();
     QString getTimeString();
+    int getDuration();
     int getFrequency();
     int timeElapsed();
     int getIntensity();
@@ -43,7 +44,7 @@ private:
     int duration;
     int currentDuration;
     int intensity;
-    bool cesMode; // true = full, false = 50%
+    bool cesMode; // true = short-pulse, false = 50% duty cycle
     bool record;
 
 };

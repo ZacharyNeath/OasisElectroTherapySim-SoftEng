@@ -17,6 +17,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     connectElements();
     sessionSelectInitialization();
+
+    //SESSION RECORD TESTING
+    //QVector<Session*> sessionsVect;
+    s1 = new Session("20 Minutes", "MET", 20, 3, true);
+    s2 = new Session("45 Minutes", "Sub Delta", 45, 3, false);
+    s3 = new Session("3 Hours", "Alpha", 180, 11, true);
+    sessionsVect.push_back(s1);
+    sessionsVect.push_back(s2);
+    sessionsVect.push_back(s3);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -139,6 +150,7 @@ void MainWindow::connectionTest(){
 //Gets records stored on device
 QVector<Session*>* MainWindow::getRecords(){
     //Ask the device to get all (or perhaps limit it to like 20) records from storage
+    return &sessionsVect;
 }
 
 //Gets all details for a record and displays them in the list window
@@ -304,7 +316,14 @@ void MainWindow::colourGroup(const int num){
 
 //Displays current records on UI
 void MainWindow::displayRecords(QVector<Session*>*){
-
+    for (int i = 0; i < sessionsVect.size(); ++i) {
+        QListWidgetItem *session = new QListWidgetItem;
+        QString cesMode = (sessionsVect[i]->getCES()?"Short-Pulse":"50% Duty Cycle");
+        session->setText("Record :" + QString::number(i+1) + " - Date: " + sessionsVect[i]->getTimeString() + "\n Group: " + sessionsVect[i]->getGroup() + "\n Type: " + sessionsVect[i]->getType() + "\n Duration: "
+                         + QString::number(sessionsVect[i]->getDuration()) + " Minutes\n Frequency: " + QString::number(sessionsVect[i]->getFrequency()) + "Hz\n CES Mode: " + cesMode + "\n----------");
+        ui->display->insertItem(i, session);
+    }
+    ui->display->setCurrentRow(0);
 }
 
 //Displays current session information on UI
@@ -596,6 +615,7 @@ void MainWindow::confirmPressed() {
             else if (ui->display->currentRow() == 1) {
                 device->recordView();
                 ui->display->clear();
+                displayRecords(getRecords());
                 return;
             }
         }

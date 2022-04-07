@@ -52,6 +52,12 @@ private:
     Session* getRecordDetails();
     Session* getUserSession();
 
+    //RECORD DISPLAY TESTING
+    QVector<Session*> sessionsVect;
+    Session* s1;
+    Session* s2;
+    Session* s3;
+
     //UI UPDATES
     void displayBattery(); //DONE
     void displayIntensity();
