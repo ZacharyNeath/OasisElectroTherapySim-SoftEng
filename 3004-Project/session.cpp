@@ -62,6 +62,11 @@ QString Session::getTimeString(){
     return dateTime.toString();
 }
 
+//Returns duration
+int Session::getDuration(){
+    return duration;
+}
+
 //Returns frequency
 int Session::getFrequency(){
     return frequency;

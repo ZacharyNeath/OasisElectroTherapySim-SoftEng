@@ -1,12 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <cmath>
+
 #include <QMainWindow>
 #include <QString>
 #include <QTimer>
+#include <QLabel>
 #include <QDateTime>
 #include <QVector>
 #include <QtDebug>
+#include <QThread>
 
 #include <device.h>
 #include <session.h>
@@ -25,14 +29,23 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QVector<QLabel*> groups;
+    QVector<QLabel*> sessions;
     Device* device;
     QTimer* buttonTimer;
+    int currentGroup;
+    int currentSession;
     int buttonHeldTime;
-    bool buttonPressed;
     bool buttonReleased;
 
+    //RECORD DISPLAY TESTING
+    QVector<Session*> sessionsVect;
+    Session* s1;
+    Session* s2;
+    Session* s3;
+
     //STATE UPDATES
-    void powerOn();
+    void powerOn(); //DONE
     void powerOff();
     void softOff();
     void enterSessionSelect();
@@ -46,19 +59,25 @@ private:
     Session* getUserSession();
 
     //UI UPDATES
-    void displayBattery();
+    void displayBattery(); //DONE
     void displayIntensity();
-    void colourGraphNumber(const int);
+    void displayConnection();
+    void colourGraphNumber(const int); //DONE
+    void colourSession(const int); //DONE
+    void colourGroup(const int); //DONE
     void displayRecords(QVector<Session*>*);
     void displaySession(Session*);
-    void displayMenu();
-    void clearGraph();
-    void clearMenu();
+    void displayMenu(); //DONE
+    void clearGraph(); //DONE
+    void clearSessions(); //DONE
+    void clearGroup(); //DONE
+    void clearMenu(); //DONE
     void clearUI();
 
     //HELPER FUNCTIONS
-    void connectButtons();
-    void buttonReset();
+    void connectElements();
+    void buttonReset(); //DONE
+    void sessionSelectInitialization(); //DONE
 
 
 private slots:
@@ -78,7 +97,7 @@ private slots:
     void confirmHeld();
 
     //RELEASED
-    void buttonRelease();
+    void buttonRelease(); //DONE
 
     //COMBO UPDATE
     void connectionUpdate();

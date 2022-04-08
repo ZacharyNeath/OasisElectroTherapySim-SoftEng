@@ -61,6 +61,7 @@ void Device::endSession(){
 //Tells device it’s testing connection
 void Device::connectionTest(){
     //enter connection test state
+    state = DeviceState::CONNECTION_TEST;
 }
 
 //Pauses current session
@@ -103,6 +104,8 @@ bool Device::createUserSession(const QString&, const QString&, const int, const 
 //Gets user session of specific ID
 Session* Device::getUserSession(const int){
     //Gets user defined session of specific id from the database
+    //TEMP
+    return nullptr;
 }
 
 //Puts current session in long term storage
@@ -115,9 +118,88 @@ bool Device::storeSession(){
 //SESSION MANIP
 
 //Creates a session
-void Device::createSession(const QString&, const QString&){
+void Device::createSession(int selectedGroup, int selectedType){
     //Create session object
         //if given string is default value it is a USER DEFINED session
+    QString groupString;
+    QString typeString;
+    int duration;
+    int frequency;
+
+    bool ces = true;
+
+    switch(selectedGroup){
+        case 0:
+            groupString = "20 Minutes";
+            duration = 20;
+            break;
+        case 1:
+            groupString = "45 Minutes";
+            duration = 45;
+            break;
+        case 2:
+            groupString = "3 Hours";
+            duration = 180;
+            break;
+        case 3:
+            groupString = "User Designated";
+            duration = -1;
+            break;
+        default:
+            return;
+    }
+
+    switch(selectedType){
+        case 0:
+            typeString = "MET";
+            frequency = 3;
+            break;
+        case 1:
+            typeString = "Sub Delta";
+            ces = false;
+            frequency = 3;
+            ces = false;
+            break;
+        case 2:
+            typeString = "Delta";
+            frequency = 5;
+            break;
+        case 3:
+            typeString = "Theta";
+            frequency = 8;
+            break;
+        case 4:
+            typeString = "Alpha";
+            frequency = 11;
+            break;
+        case 5:
+            typeString = "SMR";
+            frequency = 15;
+            break;
+        case 6:
+            typeString = "Beta";
+            frequency = 22;
+            break;
+        case 7:
+            typeString = "100 Hz";
+            frequency = 100;
+            break;
+        default:
+            return;
+    }
+
+    qInfo("\nCreating session:");
+    qInfo("Group:     %s", qUtf8Printable(groupString));
+    qInfo("Type:      %s", qUtf8Printable(typeString));
+    qInfo("Duration:  %d minutes", duration);
+    qInfo("Frequency: %dHz", frequency);
+    qInfo("CES:       %s\n", ces?"Short-Pulse":"50% Duty Cycle");
+
+    currentSession = new Session(groupString, typeString, duration, frequency, ces);
+}
+
+void Device::acceptUserSession(Session* userSession){
+    currentSession = userSession;
 }
 
 //Increases session intensity by 1
@@ -147,6 +229,13 @@ QTimer* Device::getSessionTimer(){
 
 }
 
+void Device::earlyClose(){
+    if(currentSession!=nullptr){
+        delete currentSession;
+        currentSession = nullptr;
+    }
+}
+
 //END SESSION MANIP
 
 //GETTERS
@@ -169,4 +258,14 @@ int Device::getConnectionLevel(){
 //Gets battery insertion status
 bool Device::isBatteryIn(){
     return batteryIn;
+}
+
+//SETTERS
+
+void Device::setConnection(const int c){
+    connection = c;
+}
+
+void Device::setBattery(const bool b){
+    batteryIn = b;
 }
