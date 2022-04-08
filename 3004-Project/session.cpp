@@ -102,8 +102,8 @@ void Session::setIntensity(int newIntensity){
 }
 
 //Sets recording flag
-void Session::setRecording(){
-    record = true;
+void Session::setRecording(const bool r){
+    record = r;
 }
 
 //END SETTERS

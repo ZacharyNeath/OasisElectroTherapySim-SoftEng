@@ -98,11 +98,6 @@ QVector<Session*> Device::getRecords(){
     //Queries database for all/certain number of latest records
 }
 
-//Gets details for a record specified by its id
-Session* Device::getRecordDetails(int){
-    // gets record specified by id value from database
-}
-
 //Adds a new user defined session to the db
 bool Device::createUserSession(const QString&, const QString&, const int, const bool){
     //Creates session object and tells database to add it
@@ -228,7 +223,7 @@ void Device::decreaseIntensity(){
 //Turns on recording for current session
 void Device::turnOnRecording(){
     //tells session that it will be recorded
-    currentSession->setRecording();
+    currentSession->setRecording(true);
 }
 
 //Gets remaining time in session
@@ -309,7 +304,7 @@ void Device::setBattery(const bool b){
 
 //Calculates and applies battery drain
 void Device::drainBattery(){
-    double drain = (0.15 * currentSession->getIntensity()) * ((0.01 * currentSession->getFrequency()) + (2 * connection));
+    double drain = (0.15 * currentSession->getIntensity()) * ((0.01 * currentSession->getFrequency()) + (connection));
     batteryLevel = batteryLevel - drain;
 }
 

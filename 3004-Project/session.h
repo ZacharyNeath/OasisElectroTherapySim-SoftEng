@@ -32,7 +32,7 @@ public:
 
     //SETTERS
     void setIntensity(int);
-    void setRecording();
+    void setRecording(const bool);
 
 private:
     QTimer* timer;

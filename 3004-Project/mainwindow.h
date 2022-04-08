@@ -56,7 +56,6 @@ private:
 
     //STORAGE QUERYING
     QVector<Session*>* getRecords();
-    Session* getRecordDetails();
     Session* getUserSession();
 
     //UI UPDATES

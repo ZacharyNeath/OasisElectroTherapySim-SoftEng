@@ -33,7 +33,6 @@ public:
 
     //DATABASE MANIP
     QVector<Session*> getRecords();
-    Session* getRecordDetails(int);
     bool createUserSession(const QString&, const QString&, const int, const bool);
     Session* getUserSession(const int);
     bool storeSession();
