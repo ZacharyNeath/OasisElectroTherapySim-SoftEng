@@ -28,7 +28,7 @@ public:
     void startSession();
     void endSession();
     void pauseSession();
-    void batteryChange();
+    void softOff();
     void powerOff(); //DONE
 
     //DATABASE MANIP
@@ -46,13 +46,15 @@ public:
     void turnOnRecording();
     int getSessionRemainder();
     QTimer* getSessionTimer();
-    void earlyClose();
+    int getIntensity();
+    void killSession();
 
     //GETTERS //DONE
     DeviceState getState();
     double getBatteryLevel();
     int getConnectionLevel();
     bool isBatteryIn();
+    bool batteryCritical();
 
     //SETTERS //DONE
     void setConnection(const int);
@@ -70,6 +72,9 @@ private:
     double batteryLevel;
     int connection; //0 = poor, 1 = okay, 2 = excellent
     bool batteryIn;
+
+    //HELPERS
+    void drainBattery();
 
 };
 

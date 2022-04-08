@@ -30,7 +30,6 @@ public:
     bool getCES();
     bool isRecording();
 
-
     //SETTERS
     void setIntensity(int);
     void setRecording();

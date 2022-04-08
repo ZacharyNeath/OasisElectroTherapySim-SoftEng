@@ -37,6 +37,7 @@ private:
     int currentSession;
     int buttonHeldTime;
     bool buttonReleased;
+    bool graphFlag;
 
     //RECORD DISPLAY TESTING
     QVector<Session*> sessionsVect;
@@ -72,7 +73,6 @@ private:
     void clearSessions(); //DONE
     void clearGroup(); //DONE
     void clearMenu(); //DONE
-    void clearUI();
 
     //HELPER FUNCTIONS
     void connectElements();

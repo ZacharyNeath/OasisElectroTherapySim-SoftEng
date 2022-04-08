@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     buttonHeldTime = 0;
     buttonReleased = false;
+    graphFlag = false;
 
     device = new Device();
     buttonTimer = new QTimer(this);
@@ -77,7 +78,7 @@ void MainWindow::softOff(){
     // Can be called from battery being too low
     // Can be called from the power button being held
     // Tells unit to enter soft off state
-
+    device->softOff();
 }
 
 //Tells the device to enter session select mode
@@ -91,6 +92,15 @@ void MainWindow::enterSessionSelect(){
 //Tells the device to enter Session state
 void MainWindow::startSession(){
     //Also starts the timer and links it to the updateStatus func
+    clearGraph();
+    displayIntensity();
+    QTimer* sessionTimer = device->getSessionTimer();
+    //If session was already underway resume it
+    if(!(sessionTimer->isActive())){
+        connect(sessionTimer, &QTimer::timeout, this, &MainWindow::updateStatus);
+        sessionTimer->start(1000);
+    }
+    device->startSession();
 }
 
 //Triggered when the session ends to do things necessary to when a session ends
@@ -98,7 +108,8 @@ void MainWindow::endSession(){
     // Does any UI updating if necessary
     // Tells Device session is over
     // Then calls SoftOff
-
+    device->endSession();
+    softOff();
 }
 
 //Called when a session has been selected
@@ -106,6 +117,7 @@ void MainWindow::connectionTest(){
     //tells device to enter connection test mode
     //Update UI to reflect the current test
     device->connectionTest();
+    clearGraph();
     displayConnection();
 }
 
@@ -141,7 +153,7 @@ void MainWindow::displayBattery(){
     // The graph is numbers 1-8 so:
         //numToLightUp = floor(batteryLevel/12.5)
     double battery = device->getBatteryLevel();
-    int numToLight = (int)(ceil((battery/12.5)));
+    int numToLight = (int)(ceil((battery/12.5)))-1;
 
     for(int i = 0; i<=numToLight; i++){
         colourGraphNumber(i);
@@ -151,11 +163,14 @@ void MainWindow::displayBattery(){
 //Update graph to show current intensity
 void MainWindow::displayIntensity(){
     //Query device for intensity level
+    int intensity = device->getIntensity()-1;
+    for(int i = 0; i<=intensity; i++){
+        colourGraphNumber(i);
+    }
 }
 
 //Displays device connection on graph
 void MainWindow::displayConnection(){
-    clearGraph();
     switch(device->getConnectionLevel()){
         case 2:
             colourGraphNumber(0);
@@ -363,12 +378,6 @@ void MainWindow::clearMenu(){
     ui->display->setStyleSheet("background-color: rgb(85, 87, 83);");
 }
 
-//Sets all highlighted elements back to normal
-void MainWindow::clearUI(){
-
-}
-
-
 //END UI UPDATES
 
 //HELPERS
@@ -427,11 +436,38 @@ void MainWindow::sessionSelectInitialization() {
 
 //Runs and tells unit to update itself depending on its state
 void MainWindow::updateStatus() {
-    //For more details on how it repeats
-    //https://doc.qt.io/qt-5/qtimer.html#details
-    // tells unit to update one timestep
-    // turns off if device has turned off
+    device->updateStatus();
+    int remainder = device->getSessionRemainder();
 
+    if(device->batteryCritical() || remainder==0){
+        device->endSession();
+    }
+
+    if(device->getState()==DeviceState::SOFT_OFF && device->getIntensity()==0){
+        qInfo() << "Turning off!";
+        powerOff();
+        device->killSession();
+        return;
+    }
+    else if(device->getState()==DeviceState::SOFT_OFF){ //device in soft off
+        qInfo() << "Soft Off";
+        clearGraph();
+        displayIntensity();
+    }
+    else if(device->getState()==DeviceState::SESSION){
+        clearGraph();
+        if(remainder%4==0){//Determine whether to display intensity or battery
+            graphFlag = !graphFlag;
+        }
+        if(graphFlag){
+            qInfo() << "Displaying Intensity";
+            displayIntensity();
+        }
+        else{
+            qInfo() << "Displaying Battery";
+            displayBattery();
+        }
+    }
 }
 
 //END DRIVERS
@@ -467,11 +503,13 @@ void MainWindow::upPressed() {
             }
         }
         if(device->getState()==DeviceState::SESSION_SELECT) {
+            //If we're in user designated
             if(currentGroup==groups.count()-1){
+                //Don't load anything if no sessions exist
                 if(currentSession==-1){
                     return;
                 }
-                else if(currentSession<sessions.count()-1){
+                else{ //Otherwise get the next session from the db
                     int temp = currentSession;
                     ++currentSession;
                     Session* userDesig = getUserSession();
@@ -483,13 +521,18 @@ void MainWindow::upPressed() {
                     return;
                 }
             }
-            else if(currentSession<sessions.count()-1) {
+            else if(currentSession<sessions.count()-1) { //Triggers if not in user desig
                 currentSession+=1;
             }
+
             clearGraph();
             colourGraphNumber(currentSession);
             clearSessions();
             colourSession(currentSession);
+
+        }
+        else if(device->getState()==DeviceState::SESSION){
+            device->increaseIntensity();
         }
     }
 }
@@ -545,6 +588,9 @@ void MainWindow::downPressed() {
             clearSessions();
             colourSession(currentSession);
         }
+        else if(device->getState()==DeviceState::SESSION){
+            device->decreaseIntensity();
+        }
     }
 }
 
@@ -591,21 +637,20 @@ void MainWindow::powerPressed(){
             clearGroup();
             clearSessions();
             clearGraph();
-            colourGroup(currentGroup);
-            colourSession(currentSession);
-            colourGraphNumber(currentSession);
 
-            //Covers whet
+            //Covers when we first navigate to user sessions
             if (currentGroup == groups.count()-1) {
-                clearGraph();
-                clearSessions();
-                currentSession = 0;
                 Session* currUserSession = getUserSession();
                 if(currentSession!=-1){
                     displaySession(currUserSession);
                 }
                 return;
             }
+
+            colourGroup(currentGroup);
+            colourSession(currentSession);
+            colourGraphNumber(currentSession);
+
         }
     }
 }
@@ -654,7 +699,7 @@ void MainWindow::confirmPressed() {
                 return;
             }
         }
-        if (device->getState()==DeviceState::SESSION_SELECT) {
+        else if(device->getState()==DeviceState::SESSION_SELECT) {
             if(currentGroup<groups.count()-1){
                 device->createSession(currentGroup, currentSession);
                 connectionTest();
@@ -663,6 +708,12 @@ void MainWindow::confirmPressed() {
                 Session* userSess = getUserSession();
                 device->acceptUserSession(userSess);
                 connectionTest();
+            }
+            return;
+        }
+        else if(device->getState()==DeviceState::CONNECTION_TEST){
+            if(device->getConnectionLevel()>0){
+                startSession();
             }
             return;
         }
@@ -712,6 +763,12 @@ void MainWindow::powerHeld() {
 void MainWindow::confirmHeld() {
     // Will only work during connection test
     // Turns recording on for the session and starts session
+    if(device->getState()==DeviceState::CONNECTION_TEST){
+        if(device->getConnectionLevel()>0){
+            device->turnOnRecording();
+            startSession();
+        }
+    }
 
 }
 
@@ -737,6 +794,7 @@ void MainWindow::connectionUpdate() {
     device->setConnection(connection);
 
     if(device->getState()==DeviceState::CONNECTION_TEST){
+        clearGraph();
         displayConnection();
     }
     else if(device->getState()==DeviceState::SESSION){
@@ -752,8 +810,9 @@ void MainWindow::batteryChange() {
     // Updates the devices battery status e.g. whether it’s inserted
     int battery = ui->batteryInComboBox->currentIndex();
     device->setBattery(battery);
+
     if(!(device->isBatteryIn())){
-        device->earlyClose();
+        device->killSession();
         powerOff();
     }
 }
