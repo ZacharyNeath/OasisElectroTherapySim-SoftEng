@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
     device = new Device();
     buttonTimer = new QTimer(this);
 
+    connectionUpdate();
+    batteryChange();
+
     connectElements();
     sessionSelectInitialization();
 
@@ -35,8 +38,6 @@ MainWindow::~MainWindow()
     delete ui;
     delete device;
     delete buttonTimer;
-    delete [] groups;
-    delete [] sessions;
 }
 
 //END CONST & DEST
@@ -105,21 +106,7 @@ void MainWindow::connectionTest(){
     //tells device to enter connection test mode
     //Update UI to reflect the current test
     device->connectionTest();
-    clearGraph();
-    if (ui->electrodesComboBox->currentText() == "Excellent") {
-        colourGraphNumber(0);
-        colourGraphNumber(1);
-        colourGraphNumber(2);
-    }
-    else if (ui->electrodesComboBox->currentText() == "Okay") {
-        colourGraphNumber(3);
-        colourGraphNumber(4);
-        colourGraphNumber(5);
-    }
-    else if (ui->electrodesComboBox->currentText() == "Poor") {
-        colourGraphNumber(6);
-        colourGraphNumber(7);
-    }
+    displayConnection();
 }
 
 //END STATE UPDATES
@@ -129,17 +116,19 @@ void MainWindow::connectionTest(){
 //Gets records stored on device
 QVector<Session*>* MainWindow::getRecords(){
     //Ask the device to get all (or perhaps limit it to like 20) records from storage
-    return &sessionsVect;
-}
-
-//Gets all details for a record and displays them in the list window
-Session* MainWindow::getRecordDetails(){
-    // Ask the device to query for a specific record
+    return &sessionsVect; //Temporary. Replace with official when we have long term storage up
 }
 
 //Get information for a specific user session
 Session* MainWindow::getUserSession(){
     //Find highlighted label and query device for detail relating to that session
+    Session* sess = device->getUserSession(currentSession);
+
+    if(sess==nullptr){
+        currentSession = -1;
+    }
+
+    return sess;
 }
 
 //END STORAGE QUERYING
@@ -162,6 +151,29 @@ void MainWindow::displayBattery(){
 //Update graph to show current intensity
 void MainWindow::displayIntensity(){
     //Query device for intensity level
+}
+
+//Displays device connection on graph
+void MainWindow::displayConnection(){
+    clearGraph();
+    switch(device->getConnectionLevel()){
+        case 2:
+            colourGraphNumber(0);
+            colourGraphNumber(1);
+            colourGraphNumber(2);
+            break;
+        case 1:
+            colourGraphNumber(3);
+            colourGraphNumber(4);
+            colourGraphNumber(5);
+            break;
+        case 0:
+            colourGraphNumber(6);
+            colourGraphNumber(7);
+            break;
+        default:
+            return;
+    }
 }
 
 //Lights up a specific number of the graph
@@ -211,7 +223,6 @@ void MainWindow::colourGraphNumber(const int num){
 
 //Lights up a specific session
 void MainWindow::colourSession(const int num){
-    QString colour;
     QLabel* label;
     QLabel* frequency;
 
@@ -219,78 +230,65 @@ void MainWindow::colourSession(const int num){
         case 0:
             label = ui->metLabel;
             frequency = ui->shortPulseLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 1:
             label = ui->subDeltaLabel;
             frequency = ui->dutyCycleLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 2:
             label = ui->deltaLabel;
             frequency = ui->shortPulseLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 3:
             label = ui->thetaLabel;
             frequency = ui->shortPulseLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 4:
             label = ui->alphaLabel;
             frequency = ui->shortPulseLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 5:
             label = ui->smrLabel;
             frequency = ui->shortPulseLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 6:
             label = ui->betaLabel;
             frequency = ui->shortPulseLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 7:
             label = ui->hundredHzLabel;
             frequency = ui->shortPulseLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         default:
             return;
     }
 
-    label->setStyleSheet(colour);
-    frequency->setStyleSheet(colour);
+    label->setStyleSheet("color: rgb(0,253,0);");
+    frequency->setStyleSheet("color: rgb(0,253,0);");
 }
 
 //Lights up a specific group
 void MainWindow::colourGroup(const int num){
-    QString colour;
     QLabel* label;
 
     switch(num){
         case 0:
             label = ui->twentyMinLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 1:
             label = ui->fortyFiveMinLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         case 2:
             label = ui->threeHour;
-            colour = "color: rgb(0,253,0);";
             break;
         case 3:
             label = ui->userDesigLabel;
-            colour = "color: rgb(0,253,0);";
             break;
         default:
             return;
     }
 
-    label->setStyleSheet(colour);
+    label->setStyleSheet("color: rgb(0,253,0);");
 }
 
 //Displays current records on UI
@@ -306,8 +304,8 @@ void MainWindow::displayRecords(QVector<Session*>*){
 }
 
 //Displays current session information on UI
-void MainWindow::displaySession(Session*){
-
+void MainWindow::displaySession(Session* session){
+    delete session;
 }
 
 //Displays initial menu between session selection and record viewing
@@ -387,8 +385,8 @@ void MainWindow::connectElements() {
     connect(ui -> powerButton, SIGNAL(released()), this, SLOT(buttonRelease()));
     connect(ui -> confirmButton, SIGNAL(released()), this, SLOT(buttonRelease()));
 
-    //connect(ui -> electrodesComboBox, SIGNAL(), this, SLOT());
-    //connect(ui -> batteryInComboBox, SIGNAL(), this, SLOT());
+    connect(ui -> electrodesComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(connectionUpdate()));
+    connect(ui -> batteryInComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(batteryChange()));
 }
 
 //Resets all button variables and timers when processing of a button is finished
@@ -404,23 +402,21 @@ void MainWindow::buttonReset(){
 void MainWindow::sessionSelectInitialization() {
     currentGroup = 0;
     currentSession = 0;
-    groups = new QLabel*[4];
-    sessions = new QLabel*[8];
 
     //Assigns labels to the groups array
-    groups[0] = ui->twentyMinLabel;
-    groups[1] = ui->fortyFiveMinLabel;
-    groups[2] = ui->threeHour;
-    groups[3] = ui->userDesigLabel;
+    groups.append(ui->twentyMinLabel);
+    groups.append(ui->fortyFiveMinLabel);
+    groups.append(ui->threeHour);
+    groups.append(ui->userDesigLabel);
 
-    sessions[0] = ui->metLabel;
-    sessions[1] = ui->subDeltaLabel;
-    sessions[2] = ui->deltaLabel;
-    sessions[3] = ui->thetaLabel;
-    sessions[4] = ui->alphaLabel;
-    sessions[5] = ui->smrLabel;
-    sessions[6] = ui->betaLabel;
-    sessions[7] = ui->hundredHzLabel;
+    sessions.append(ui->metLabel);
+    sessions.append(ui->subDeltaLabel);
+    sessions.append(ui->deltaLabel);
+    sessions.append(ui->thetaLabel);
+    sessions.append(ui->alphaLabel);
+    sessions.append(ui->smrLabel);
+    sessions.append(ui->betaLabel);
+    sessions.append(ui->hundredHzLabel);
 }
 
 //END HELPERS
@@ -471,13 +467,29 @@ void MainWindow::upPressed() {
             }
         }
         if(device->getState()==DeviceState::SESSION_SELECT) {
-            if(currentSession<sizeof(sessions)-1) {
-                currentSession+=1;
-                clearGraph();
-                colourGraphNumber(currentSession);
-                clearSessions();
-                colourSession(currentSession);
+            if(currentGroup==groups.count()-1){
+                if(currentSession==-1){
+                    return;
+                }
+                else if(currentSession<sessions.count()-1){
+                    int temp = currentSession;
+                    ++currentSession;
+                    Session* userDesig = getUserSession();
+                    if(userDesig==nullptr){
+                        currentSession = temp;
+                        return;
+                    }
+                    displaySession(userDesig);
+                    return;
+                }
             }
+            else if(currentSession<sessions.count()-1) {
+                currentSession+=1;
+            }
+            clearGraph();
+            colourGraphNumber(currentSession);
+            clearSessions();
+            colourSession(currentSession);
         }
     }
 }
@@ -513,14 +525,25 @@ void MainWindow::downPressed() {
                 ui->display->setCurrentRow(ui->display->currentRow()+1);
             }
         }
-        if(device->getState()==DeviceState::SESSION_SELECT) {
-            if(currentSession>0) {
-                currentSession-=1;
-                clearGraph();
-                colourGraphNumber(currentSession);
-                clearSessions();
-                colourSession(currentSession);
+        else if(device->getState()==DeviceState::SESSION_SELECT) {
+            if(currentGroup==groups.count()-1){
+                if(currentSession==-1){
+                    return;
+                }
+                else if(currentSession>0){
+                    --currentSession;
+                    Session* userDesig = getUserSession();
+                    displaySession(userDesig);
+                    return;
+                }
             }
+            else if(currentSession>0) {
+                currentSession-=1;
+            }
+            clearGraph();
+            colourGraphNumber(currentSession);
+            clearSessions();
+            colourSession(currentSession);
         }
     }
 }
@@ -532,6 +555,10 @@ void MainWindow::powerPressed(){
         // If viewing a record it returns to record menu (basically a back button)
 
     //If button has just been pressed start timer
+    if(!(device->isBatteryIn())){
+        return;
+    }
+
     if(!buttonReleased && !(buttonTimer->isActive())){
         connect(buttonTimer, &QTimer::timeout, this, &MainWindow::powerPressed);
         buttonTimer->start(20);
@@ -554,24 +581,30 @@ void MainWindow::powerPressed(){
     if(buttonReleased && buttonHeldTime < 100){
         buttonReset();
         if(device->getState()==DeviceState::SESSION_SELECT) {
-            if(currentGroup<(sizeof(groups)/2)) {
+            if(currentGroup<groups.count()-1) {
                 currentGroup+=1;
-                clearGroup();
-                colourGroup(currentGroup);
-                colourSession(currentSession);
-                if (currentGroup == (sizeof(groups)/2)-1) {
-                    clearGraph();
-                    clearSessions();
-                    currentSession = -1;
-                }
             }
-            if(currentGroup==(sizeof(groups)/2)) {
+            else if(currentGroup==groups.count()-1) {
                 currentGroup = 0;
                 currentSession = 0;
-                clearGroup();
-                colourGroup(currentGroup);
-                colourSession(currentSession);
-                colourGraphNumber(0);
+            }
+            clearGroup();
+            clearSessions();
+            clearGraph();
+            colourGroup(currentGroup);
+            colourSession(currentSession);
+            colourGraphNumber(currentSession);
+
+            //Covers whet
+            if (currentGroup == groups.count()-1) {
+                clearGraph();
+                clearSessions();
+                currentSession = 0;
+                Session* currUserSession = getUserSession();
+                if(currentSession!=-1){
+                    displaySession(currUserSession);
+                }
+                return;
             }
         }
     }
@@ -622,8 +655,15 @@ void MainWindow::confirmPressed() {
             }
         }
         if (device->getState()==DeviceState::SESSION_SELECT) {
-            device->Device::createSession(currentGroup, currentSession);
-            connectionTest();
+            if(currentGroup<groups.count()-1){
+                device->createSession(currentGroup, currentSession);
+                connectionTest();
+            }
+            else if(currentSession!=-1){
+                Session* userSess = getUserSession();
+                device->acceptUserSession(userSess);
+                connectionTest();
+            }
             return;
         }
     }
@@ -693,12 +733,29 @@ void MainWindow::buttonRelease(){
 void MainWindow::connectionUpdate() {
     //Updates unit with new connection status
     // Only update display if in connection test
+    int connection = ui->electrodesComboBox->currentIndex();
+    device->setConnection(connection);
+
+    if(device->getState()==DeviceState::CONNECTION_TEST){
+        displayConnection();
+    }
+    else if(device->getState()==DeviceState::SESSION){
+        if(connection==0){
+            connectionTest();
+        }
+    }
 
 }
 
 //Updates battery status
 void MainWindow::batteryChange() {
     // Updates the devices battery status e.g. whether it’s inserted
+    int battery = ui->batteryInComboBox->currentIndex();
+    device->setBattery(battery);
+    if(!(device->isBatteryIn())){
+        device->earlyClose();
+        powerOff();
+    }
 }
 
 //END COMBO UPDATE

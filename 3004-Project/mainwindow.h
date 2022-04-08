@@ -29,14 +29,20 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    QLabel** groups;
-    QLabel** sessions;
+    QVector<QLabel*> groups;
+    QVector<QLabel*> sessions;
     Device* device;
     QTimer* buttonTimer;
     int currentGroup;
     int currentSession;
     int buttonHeldTime;
     bool buttonReleased;
+
+    //RECORD DISPLAY TESTING
+    QVector<Session*> sessionsVect;
+    Session* s1;
+    Session* s2;
+    Session* s3;
 
     //STATE UPDATES
     void powerOn(); //DONE
@@ -52,15 +58,10 @@ private:
     Session* getRecordDetails();
     Session* getUserSession();
 
-    //RECORD DISPLAY TESTING
-    QVector<Session*> sessionsVect;
-    Session* s1;
-    Session* s2;
-    Session* s3;
-
     //UI UPDATES
     void displayBattery(); //DONE
     void displayIntensity();
+    void displayConnection();
     void colourGraphNumber(const int); //DONE
     void colourSession(const int); //DONE
     void colourGroup(const int); //DONE

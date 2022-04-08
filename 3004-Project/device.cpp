@@ -104,6 +104,8 @@ bool Device::createUserSession(const QString&, const QString&, const int, const 
 //Gets user session of specific ID
 Session* Device::getUserSession(const int){
     //Gets user defined session of specific id from the database
+    //TEMP
+    return nullptr;
 }
 
 //Puts current session in long term storage
@@ -196,6 +198,10 @@ void Device::createSession(int selectedGroup, int selectedType){
     currentSession = new Session(groupString, typeString, duration, frequency, ces);
 }
 
+void Device::acceptUserSession(Session* userSession){
+    currentSession = userSession;
+}
+
 //Increases session intensity by 1
 void Device::increaseIntensity(){
 
@@ -223,6 +229,13 @@ QTimer* Device::getSessionTimer(){
 
 }
 
+void Device::earlyClose(){
+    if(currentSession!=nullptr){
+        delete currentSession;
+        currentSession = nullptr;
+    }
+}
+
 //END SESSION MANIP
 
 //GETTERS
@@ -245,4 +258,14 @@ int Device::getConnectionLevel(){
 //Gets battery insertion status
 bool Device::isBatteryIn(){
     return batteryIn;
+}
+
+//SETTERS
+
+void Device::setConnection(const int c){
+    connection = c;
+}
+
+void Device::setBattery(const bool b){
+    batteryIn = b;
 }

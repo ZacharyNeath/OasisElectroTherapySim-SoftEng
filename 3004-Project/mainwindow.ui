@@ -762,7 +762,7 @@
     </property>
     <item>
      <property name="text">
-      <string>Excellent</string>
+      <string>Poor</string>
      </property>
     </item>
     <item>
@@ -772,7 +772,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Poor</string>
+      <string>Excellent</string>
      </property>
     </item>
    </widget>
@@ -790,12 +790,12 @@
     </property>
     <item>
      <property name="text">
-      <string>True</string>
+      <string>False</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>False</string>
+      <string>True</string>
      </property>
     </item>
    </widget>

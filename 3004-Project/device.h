@@ -40,17 +40,23 @@ public:
 
     //SESSION MANIP
     void createSession(int, int); //DONE
+    void acceptUserSession(Session*);
     void increaseIntensity();
     void decreaseIntensity();
     void turnOnRecording();
     int getSessionRemainder();
     QTimer* getSessionTimer();
+    void earlyClose();
 
     //GETTERS //DONE
     DeviceState getState();
     double getBatteryLevel();
     int getConnectionLevel();
     bool isBatteryIn();
+
+    //SETTERS //DONE
+    void setConnection(const int);
+    void setBattery(const bool);
 
 private:
     //STATIC
