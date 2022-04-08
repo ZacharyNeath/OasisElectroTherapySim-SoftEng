@@ -644,6 +644,7 @@ void MainWindow::powerPressed(){
                 if(currentSession!=-1){
                     displaySession(currUserSession);
                 }
+                colourGroup(currentGroup);
                 return;
             }
 
@@ -680,6 +681,7 @@ void MainWindow::confirmPressed() {
     //If button wasn't held proceed as normal
     if(buttonReleased && buttonHeldTime < 100){
         buttonReset();
+
         if (device->getState()==DeviceState::MENU) {
             //If session mode selected
             if (ui->display->currentRow() == 0) {
@@ -699,6 +701,7 @@ void MainWindow::confirmPressed() {
                 return;
             }
         }
+
         else if(device->getState()==DeviceState::SESSION_SELECT) {
             if(currentGroup<groups.count()-1){
                 device->createSession(currentGroup, currentSession);
@@ -711,6 +714,7 @@ void MainWindow::confirmPressed() {
             }
             return;
         }
+
         else if(device->getState()==DeviceState::CONNECTION_TEST){
             if(device->getConnectionLevel()>0){
                 startSession();
