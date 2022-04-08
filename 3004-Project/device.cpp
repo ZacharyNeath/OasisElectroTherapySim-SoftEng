@@ -123,6 +123,7 @@ void Device::createSession(int selectedGroup, int selectedType){
     QString typeString;
     int duration;
     int frequency;
+
     bool ces = true;
 
     switch(selectedGroup){
@@ -155,6 +156,7 @@ void Device::createSession(int selectedGroup, int selectedType){
             typeString = "Sub Delta";
             ces = false;
             frequency = 3;
+            ces = false;
             break;
         case 2:
             typeString = "Delta";

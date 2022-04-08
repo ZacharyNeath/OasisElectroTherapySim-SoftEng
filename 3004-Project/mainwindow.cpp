@@ -35,6 +35,8 @@ MainWindow::~MainWindow()
     delete ui;
     delete device;
     delete buttonTimer;
+    delete [] groups;
+    delete [] sessions;
 }
 
 //END CONST & DEST
@@ -83,29 +85,6 @@ void MainWindow::enterSessionSelect(){
     clearMenu();
     clearGraph();
     device->enterSessionSelect();
-}
-
-//Initializes Session Selection Info
-void MainWindow::sessionSelectInitialization() {
-    int currentGroup = 0;
-    int currentSession = 0;
-    QLabel** groups = new QLabel*[4];
-    QLabel** sessions = new QLabel*[8];
-
-    //Assigns labels to the groups array
-    groups[0] = ui->twentyMinLabel;
-    groups[1] = ui->fortyFiveMinLabel;
-    groups[2] = ui->threeHour;
-    groups[3] = ui->userDesigLabel;
-
-    sessions[0] = ui->metLabel;
-    sessions[1] = ui->subDeltaLabel;
-    sessions[2] = ui->deltaLabel;
-    sessions[3] = ui->thetaLabel;
-    sessions[4] = ui->alphaLabel;
-    sessions[5] = ui->smrLabel;
-    sessions[6] = ui->betaLabel;
-    sessions[7] = ui->hundredHzLabel;
 }
 
 //Tells the device to enter Session state
@@ -419,6 +398,29 @@ void MainWindow::buttonReset(){
     buttonTimer->stop();
     buttonTimer->disconnect();
 
+}
+
+//Initializes Session Selection Info
+void MainWindow::sessionSelectInitialization() {
+    currentGroup = 0;
+    currentSession = 0;
+    groups = new QLabel*[4];
+    sessions = new QLabel*[8];
+
+    //Assigns labels to the groups array
+    groups[0] = ui->twentyMinLabel;
+    groups[1] = ui->fortyFiveMinLabel;
+    groups[2] = ui->threeHour;
+    groups[3] = ui->userDesigLabel;
+
+    sessions[0] = ui->metLabel;
+    sessions[1] = ui->subDeltaLabel;
+    sessions[2] = ui->deltaLabel;
+    sessions[3] = ui->thetaLabel;
+    sessions[4] = ui->alphaLabel;
+    sessions[5] = ui->smrLabel;
+    sessions[6] = ui->betaLabel;
+    sessions[7] = ui->hundredHzLabel;
 }
 
 //END HELPERS

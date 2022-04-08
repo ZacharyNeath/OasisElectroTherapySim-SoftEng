@@ -29,14 +29,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    Device* device;
-    QTimer* buttonTimer;
-    int buttonHeldTime;
-    bool buttonReleased;
-    int currentGroup;
-    int currentSession;
     QLabel** groups;
     QLabel** sessions;
+    Device* device;
+    QTimer* buttonTimer;
+    int currentGroup;
+    int currentSession;
+    int buttonHeldTime;
+    bool buttonReleased;
 
     //STATE UPDATES
     void powerOn(); //DONE
