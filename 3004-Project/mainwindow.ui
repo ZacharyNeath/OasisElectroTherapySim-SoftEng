@@ -33,38 +33,6 @@
      <string>Power</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="intUpButton">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>260</y>
-      <width>80</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(238, 238, 236);</string>
-    </property>
-    <property name="text">
-     <string>UP</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="intDownButton">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>290</y>
-      <width>80</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(238, 238, 236);</string>
-    </property>
-    <property name="text">
-     <string>DOWN</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="confirmButton">
     <property name="geometry">
      <rect>
@@ -79,27 +47,6 @@
     </property>
     <property name="text">
      <string>Confirm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="intensityButton">
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>220</y>
-      <width>41</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>20</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(238, 238, 236);</string>
-    </property>
-    <property name="text">
-     <string>INT</string>
     </property>
    </widget>
    <widget class="QLabel" name="twentyMinLabel">
@@ -814,6 +761,60 @@
     <property name="isWrapping" stdset="0">
      <bool>false</bool>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>220</y>
+      <width>84</width>
+      <height>103</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="completeVerticalLayout">
+     <item>
+      <widget class="QLabel" name="intensityLabel">
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(238, 238, 236);</string>
+       </property>
+       <property name="text">
+        <string>INT</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="buttonVerticalLayout">
+       <item>
+        <widget class="QPushButton" name="intUpButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(238, 238, 236);</string>
+         </property>
+         <property name="text">
+          <string>UP</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="intDownButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(238, 238, 236);</string>
+         </property>
+         <property name="text">
+          <string>DOWN</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
