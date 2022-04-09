@@ -17,12 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     device.cpp \
+    longTermStorage.cpp \
     main.cpp \
     mainwindow.cpp \
     session.cpp
 
 HEADERS += \
     device.h \
+    longTermStorage.h \
     mainwindow.h \
     session.h
 
