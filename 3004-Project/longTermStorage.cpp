@@ -1,4 +1,4 @@
-#include "longTermStorage.h"
+﻿#include "longTermStorage.h"
 
 //CTOR & DTOR
 const QString LongTermStorage::RECORD_FILE = "";
@@ -61,7 +61,6 @@ QVector<Session*>* LongTermStorage::getRecords(const int id){
 
 //HELPERS
 ///Create and return new session object
-Session* LongTermStorage::createSession(QString groupString, QString typeString, int duration, int frequency, QString ces){
-
-    return nullptr_t;
+Session* LongTermStorage::createSession(const QString& groupString, const QString& typeString, const int duration, const int frequency, const bool ces){
+    return new Session(groupString, typeString, duration, frequency, ces);
 }
