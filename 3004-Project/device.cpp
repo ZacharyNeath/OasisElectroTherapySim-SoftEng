@@ -115,7 +115,12 @@ Session* Device::getUserSession(const int){
 
 //Puts current session in long term storage
 bool Device::storeSession(){
-
+    if (longTermStorage->saveRecord(currentSession)){
+        qInfo()<<"Stored Session Successfully";
+        return true;
+    } else {
+        qInfo()<<"Failed to store Session to storage"; return false;
+    }
 }
 
 //END DATABASE MANIP

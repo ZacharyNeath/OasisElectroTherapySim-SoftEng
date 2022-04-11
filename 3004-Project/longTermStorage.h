@@ -26,6 +26,11 @@ public:
     QVector<Session*>* getRecords();
     QVector<Session*>* getUserSession(const int);
 
+    //LOAD & SAVE FROM FILE
+    bool loadRecords();
+    bool saveRecord(Session*);
+    bool loadUserSessions();
+    bool saveUserSession(Session*);
 
 private:
     //FILE
@@ -36,11 +41,6 @@ private:
     QVector<Session*> records;
     QVector<Session*> userSessions;
 
-    //LOAD & SAVE FROM FILE
-    bool loadRecords();
-    bool saveRecord(Session*);
-    bool loadUserSessions();
-    bool saveUserSession(Session*);
 
     //HELPERS
     Session* createSession(const QString& groupString, const QString& typeString, const int duration, const int frequency, const bool ces, const QString);
