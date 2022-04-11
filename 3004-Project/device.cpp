@@ -4,6 +4,7 @@
 const double Device::MAX_POWER = 100;
 
 Device::Device(){
+    longTermStorage = new LongTermStorage();
     state = DeviceState::OFF;
     currentSession = nullptr;
     batteryLevel = MAX_POWER;
@@ -13,6 +14,7 @@ Device::Device(){
 
 Device::~Device(){
     killSession();
+    delete longTermStorage;
 }
 
 //END CONST & DEST
@@ -94,8 +96,9 @@ void Device::powerOff(){
 //DATABASE MANIP
 
 //Returns list of records
-QVector<Session*> Device::getRecords(){
+QVector<Session*>* Device::getRecords(){
     //Queries database for all/certain number of latest records
+    return longTermStorage->getRecords();
 }
 
 //Adds a new user defined session to the db

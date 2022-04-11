@@ -3,12 +3,16 @@
 
 #include <QObject>
 #include <QString>
+#include <iostream>
 #include <QVector>
 #include <QFile>
+#include <QJsonArray>
+#include <QtDebug>
 #include <QJsonObject>
 #include <QJsonDocument>
 
 #include <session.h>
+using namespace std;
 
 class LongTermStorage : public QObject
 {
@@ -20,13 +24,13 @@ public:
 
     //GETTERS
     QVector<Session*>* getRecords();
-    QVector<Session*>* getUserSessions();
+    QVector<Session*>* getUserSession(const int);
 
 
 private:
     //FILE
-    const QString RECORD_FILE;
-    const QString USER_SESSION_FILE;
+    const QString RECORD_FILE = "../3004-Project/Data/records.json";
+    const QString USER_SESSION_FILE = "../3004-Project/Data/records.json";
 
     //STORAGE VECTORS
     QVector<Session*> records;
@@ -39,7 +43,7 @@ private:
     bool saveUserSession(Session*);
 
     //HELPERS
-    Session* createSession(QString groupString, QString typeString, int duration, int frequency, QString ces);
+    Session* createSession(const QString& groupString, const QString& typeString, const int duration, const int frequency, const bool ces, const QString);
 
 };
 

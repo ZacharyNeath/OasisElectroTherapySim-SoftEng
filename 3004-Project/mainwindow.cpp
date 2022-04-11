@@ -27,9 +27,9 @@ MainWindow::MainWindow(QWidget *parent)
     s1 = new Session("20 Minutes", "MET", 20, 3, true);
     s2 = new Session("45 Minutes", "Sub Delta", 45, 3, false);
     s3 = new Session("3 Hours", "Alpha", 180, 11, true);
-    sessionsVect.push_back(s1);
-    sessionsVect.push_back(s2);
-    sessionsVect.push_back(s3);
+    //sessionsVect.push_back(s1);
+    //sessionsVect.push_back(s2);
+    //sessionsVect.push_back(s3);
 
 
 }
@@ -128,7 +128,8 @@ void MainWindow::connectionTest(){
 //Gets records stored on device
 QVector<Session*>* MainWindow::getRecords(){
     //Ask the device to get all (or perhaps limit it to like 20) records from storage
-    return &sessionsVect; //Temporary. Replace with official when we have long term storage up
+    sessionsVect = *device->getRecords();
+    return &sessionsVect;
 }
 
 //Get information for a specific user session

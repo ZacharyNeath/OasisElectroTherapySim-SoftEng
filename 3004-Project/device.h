@@ -6,6 +6,7 @@
 #include <QVector>
 #include <QTimer>
 #include <session.h>
+#include <longTermStorage.h>
 
 enum DeviceState {OFF, MENU, RECORDS, SESSION_SELECT, CONNECTION_TEST, SESSION, SOFT_OFF};
 
@@ -32,7 +33,7 @@ public:
     void powerOff(); //DONE
 
     //DATABASE MANIP
-    QVector<Session*> getRecords();
+    QVector<Session*>* getRecords();
     bool createUserSession(const QString&, const QString&, const int, const bool);
     Session* getUserSession(const int);
     bool storeSession();
@@ -62,6 +63,9 @@ public:
 private:
     //STATIC
     static const double MAX_POWER;
+
+    //DATABASE
+    LongTermStorage* longTermStorage;
 
     //ENUM
     DeviceState state;

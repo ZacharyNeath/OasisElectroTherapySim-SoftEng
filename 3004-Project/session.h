@@ -12,6 +12,7 @@ class Session : public QObject
 public:
     //CONST & DEST
     Session(const QString&, const QString&, const int, const int, const bool);
+    Session(const QString&, const QString&, const int, const int, const bool, const QDateTime);
     ~Session();
 
     //UTILITY
