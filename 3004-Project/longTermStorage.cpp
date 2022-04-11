@@ -11,8 +11,8 @@ LongTermStorage::LongTermStorage(){
     //feel free to add more/change it to test
     //also let me know if it actually saves to a file when session is complete
 
-    Session* s = new Session("20 Minutes","100Hz",20,100,true);  //uncomment these lines
-    saveRecord(s);                                               //
+    //Session* s = new Session("20 Minutes","100Hz",20,100,true);  //uncomment these lines
+    //saveRecord(s);                                               //
 
     cout<< "    --LongTermStorage Ctor"<<endl;
 }
