@@ -440,7 +440,7 @@ void MainWindow::updateStatus() {
     device->updateStatus();
     int remainder = device->getSessionRemainder();
 
-    if(device->batteryCritical() || remainder==0){
+    if((device->batteryCritical() || remainder==0 )&& device->getState()!=SOFT_OFF){
         device->endSession();
     }
 
