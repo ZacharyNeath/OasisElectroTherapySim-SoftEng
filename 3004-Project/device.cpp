@@ -107,10 +107,9 @@ bool Device::createUserSession(const QString&, const int, const int, const bool)
 }
 
 //Gets user session of specific ID
-Session* Device::getUserSession(const int){
+Session* Device::getUserSession(const int id){
     //Gets user defined session of specific id from the database
-    //TEMP
-    return nullptr;
+    return longTermStorage->getUserSession(id);
 }
 
 //Puts current session in long term storage

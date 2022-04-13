@@ -7,6 +7,8 @@ const QString LongTermStorage::USER_SESSION_FILE = "../3004-Project/Data/records
 
 LongTermStorage::LongTermStorage(){
     loadRecords();
+    loadUserSessions();
+
 
     //TESTING FOR SAVING RECORD
 
@@ -101,13 +103,38 @@ bool LongTermStorage::saveRecord(Session* s){
     return true;
 }
 
-//Read record file and fill record collection
+//Read User session file and fill collection
 bool LongTermStorage::loadUserSessions(){
+    //Get JsonDocument from file
+    QFile file(USER_SESSION_FILE);
+    QString value;
+    if( file.open( QFile::ReadOnly )){
+        qInfo() << "Info: ------- successfully opened file: "<<USER_SESSION_FILE;
+        value = file.readAll();
+        file.close();
+    } else {
+        qInfo() << "Error: ------- reading file: "<<USER_SESSION_FILE;
+        return false;
+    }
+    QJsonDocument document = QJsonDocument::fromJson(value.toUtf8());
+
+    //Add inner objects to collection
+    QJsonArray content = document.array();
+
+    for( auto v : content){
+        //Create QJsonObject from array entry
+        QJsonObject o = v.toObject();
+        Session* s = new Session(o["Group"].toString(),o["Type"].toString(),o["Duration"].toInt(),o["Frequency"].toInt(),o["CES Mode"].toBool());
+        userSessions.push_back(s);
+        //qInfo()<< s->getGroup() << " " << s->getType() << " " << s->getDuration() << " " << s->getFrequency()<< " " << s->getCES()<< " ";
+    }
+
+    qInfo() << content;
 
     return true;
 }
 
-//Add given session record to record file
+//Add given session to user session file
 bool LongTermStorage::saveUserSession(Session* s){
 
     return false;
@@ -124,9 +151,12 @@ QVector<Session*>* LongTermStorage::getRecords(){
 }
 
 //Return User session with given id
-QVector<Session*>* LongTermStorage::getUserSession(const int id){
-
-    return nullptr;
+Session* LongTermStorage::getUserSession(const int id){
+    if(id > userSessions.size()-1)
+            return nullptr;
+    else{
+        return userSessions.at(id);
+    }
 }
 
 //END GETTERS

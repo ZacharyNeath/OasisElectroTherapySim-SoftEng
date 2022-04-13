@@ -23,7 +23,7 @@ public:
 
     //GETTERS
     QVector<Session*>* getRecords();
-    QVector<Session*>* getUserSession(const int);
+    Session* getUserSession(const int);
 
     //LOAD & SAVE FROM FILE
     bool loadRecords();

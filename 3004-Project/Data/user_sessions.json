@@ -1,5 +1,5 @@
-{
-    "1":{
+[
+    {
         "CES Mode": true,
         "Date": "Sun Apr 10 21:00:01 2022",
         "Duration": 180,
@@ -7,7 +7,7 @@
         "Group": "3 Hours",
         "Type": "Beta"
     },
-    "2":{
+    {
         "CES Mode": true,
         "Date": "Sat Mar 12 19:00:30 2022",
         "Duration": 180,
@@ -15,7 +15,7 @@
         "Group": "45 Minutes",
         "Type": "Alpha"
     },
-    "3":{
+    {
         "CES Mode": true,
         "Date": "Tue Mar 15 19:00:30 2022",
         "Duration": 180,
@@ -23,4 +23,4 @@
         "Group": "45 Minutes",
         "Type": "Alpha"
     }
-}
+]
