@@ -126,10 +126,10 @@ void MainWindow::connectionTest(){
 //STORAGE QUERYING
 
 //Gets records stored on device
-QVector<Session*>* MainWindow::getRecords(){
+QVector<Session*> MainWindow::getRecords(){
     //Ask the device to get all (or perhaps limit it to like 20) records from storage
-    sessionsVect = *device->getRecords();
-    return &sessionsVect;
+    sessionsVect = device->getRecords();
+    return *sessionsVect;
 }
 
 //Get information for a specific user session
@@ -308,7 +308,7 @@ void MainWindow::colourGroup(const int num){
 }
 
 //Displays current records on UI
-void MainWindow::displayRecords(QVector<Session*>*){
+void MainWindow::displayRecords(QVector<Session*> sessionsVect){
     for (int i = 0; i < sessionsVect.size(); ++i) {
         QListWidgetItem *session = new QListWidgetItem;
         QString cesMode = (sessionsVect[i]->getCES()?"Short-Pulse":"50% Duty Cycle");

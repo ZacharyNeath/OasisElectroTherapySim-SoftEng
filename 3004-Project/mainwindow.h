@@ -40,7 +40,7 @@ private:
     bool graphFlag;
 
     //RECORD DISPLAY TESTING
-    QVector<Session*> sessionsVect;
+    QVector<Session*>* sessionsVect;
     Session* s1;
     Session* s2;
     Session* s3;
@@ -55,7 +55,7 @@ private:
     void connectionTest();
 
     //STORAGE QUERYING
-    QVector<Session*>* getRecords();
+    QVector<Session*> getRecords();
     Session* getUserSession();
 
     //UI UPDATES
@@ -65,7 +65,7 @@ private:
     void colourGraphNumber(const int); //DONE
     void colourSession(const int); //DONE
     void colourGroup(const int); //DONE
-    void displayRecords(QVector<Session*>*);
+    void displayRecords(QVector<Session*>);
     void displaySession(Session*);
     void displayMenu(); //DONE
     void clearGraph(); //DONE
