@@ -40,10 +40,10 @@ private:
     bool graphFlag;
 
     //RECORD DISPLAY TESTING
-    QVector<Session*>* sessionsVect;
-    Session* s1;
-    Session* s2;
-    Session* s3;
+    //QVector<Session*> sessionsVect;
+    //Session* s1;
+    //Session* s2;
+    //Session* s3;
 
     //STATE UPDATES
     void powerOn(); //DONE
@@ -90,8 +90,6 @@ private slots:
     void confirmPressed();
 
     //HELD
-    void upHeld();
-    void downHeld();
     void powerHeld();
     void confirmHeld();
 

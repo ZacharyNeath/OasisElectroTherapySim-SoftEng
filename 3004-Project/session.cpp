@@ -2,17 +2,17 @@
 
 //CONST & DEST
 
-Session::Session(const QString& group, const QString& type, const int duration, const int frequency, const bool ces){
+Session::Session(const QString& group, const QString& type, const int duration, const int frequency, const bool ces, const QDateTime dt, const int currentDuration){
     this->group = group;
     this->type = type;
     this->duration = duration;
     this->frequency = frequency;
     this->cesMode = ces;
 
-    this->currentDuration = 0;
+    this->currentDuration = currentDuration;
     this->intensity = 0;
     this->record = false;
-    dateTime = QDateTime::currentDateTime();
+    dateTime = dt;
 
     //For more details on how it repeats
     //https://doc.qt.io/qt-5/qtimer.html#details
@@ -20,22 +20,21 @@ Session::Session(const QString& group, const QString& type, const int duration, 
 
 }
 
-Session::Session(const QString& group, const QString& type, const int duration, const int frequency, const bool ces, const QDateTime dt){
-    this->group = group;
-    this->type = type;
-    this->duration = duration;
-    this->frequency = frequency;
-    this->cesMode = ces;
-    this->dateTime = dt; //dateTime = QDateTime::currentDateTime();
+Session::Session(const Session& s){
+    this->group = s.group;
+    this->type = s.type;
+    this->duration = s.duration;
+    this->frequency = s.frequency;
+    this->cesMode = s.cesMode;
+    this->dateTime = s.dateTime; //dateTime = QDateTime::currentDateTime();
 
-    this->currentDuration = 0;
-    this->intensity = 0;
-    this->record = false;
+    this->currentDuration = s.currentDuration;
+    this->intensity = s.intensity;
+    this->record = s.record;
 
     //For more details on how it repeats
     //https://doc.qt.io/qt-5/qtimer.html#details
     timer = new QTimer(this);
-
 }
 
 Session::~Session(){

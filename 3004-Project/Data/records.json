@@ -2,25 +2,28 @@
     {
         "CES Mode": true,
         "Date": "Sun Apr 10 21:00:01 2022",
-        "Duration": 180,
+        "Duration": 150,
         "Frequency": 90,
         "Group": "3 Hours",
+        "Time": 180,
         "Type": "Beta"
     },
     {
         "CES Mode": true,
         "Date": "Sat Mar 12 19:00:30 2022",
-        "Duration": 180,
+        "Duration": 45,
         "Frequency": 11,
         "Group": "45 Minutes",
+        "Time": 45,
         "Type": "Alpha"
     },
     {
         "CES Mode": true,
         "Date": "Tue Mar 15 19:00:30 2022",
-        "Duration": 45,
-        "Frequency": 16,
+        "Duration": 25,
+        "Frequency": 11,
         "Group": "45 Minutes",
-        "Type": "Delta"
+        "Time": 45,
+        "Type": "Alpha"
     }
 ]

@@ -24,9 +24,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //SESSION RECORD TESTING
     //QVector<Session*> sessionsVect;
-    s1 = new Session("20 Minutes", "MET", 20, 3, true);
-    s2 = new Session("45 Minutes", "Sub Delta", 45, 3, false);
-    s3 = new Session("3 Hours", "Alpha", 180, 11, true);
     //sessionsVect.push_back(s1);
     //sessionsVect.push_back(s2);
     //sessionsVect.push_back(s3);
@@ -128,8 +125,7 @@ void MainWindow::connectionTest(){
 //Gets records stored on device
 QVector<Session*> MainWindow::getRecords(){
     //Ask the device to get all (or perhaps limit it to like 20) records from storage
-    sessionsVect = device->getRecords();
-    return *sessionsVect;
+    return device->getRecords();;
 }
 
 //Get information for a specific user session
@@ -308,14 +304,17 @@ void MainWindow::colourGroup(const int num){
 }
 
 //Displays current records on UI
-void MainWindow::displayRecords(QVector<Session*> sessionsVect){
+void MainWindow::displayRecords(QVector<Session*>* sessions){
+    QVector<Session*>sessionsVect = *(sessions);
+
     for (int i = 0; i < sessionsVect.size(); ++i) {
         QListWidgetItem *session = new QListWidgetItem;
         QString cesMode = (sessionsVect[i]->getCES()?"Short-Pulse":"50% Duty Cycle");
         session->setText("Record :" + QString::number(i+1) + " - Date: " + sessionsVect[i]->getTimeString() + "\n Group: " + sessionsVect[i]->getGroup() + "\n Type: " + sessionsVect[i]->getType() + "\n Duration: "
-                         + QString::number(sessionsVect[i]->getDuration()) + " Minutes\n Frequency: " + QString::number(sessionsVect[i]->getFrequency()) + "Hz\n CES Mode: " + cesMode + "\n----------");
+                         + QString::number(sessionsVect[i]->timeElapsed()) + " Minutes\n Frequency: " + QString::number(sessionsVect[i]->getFrequency()) + "Hz\n CES Mode: " + cesMode + "\n----------");
         ui->display->insertItem(i, session);
     }
+
     ui->display->setCurrentRow(0);
 }
 
@@ -479,62 +478,44 @@ void MainWindow::upPressed() {
             //If in record menu it navigates
             //If in session select it navigates Session Type
             //If in session it increases intensity
-    if(!buttonReleased && !(buttonTimer->isActive())){
-        connect(buttonTimer, &QTimer::timeout, this, &MainWindow::upPressed);
-        buttonTimer->start(20);
-        return;
-    }
 
-    if(!buttonReleased){
-        ++buttonHeldTime;
-    }
 
-    //Consider button "held" after 2 seconds
-    if(buttonHeldTime>=100){
-        buttonReset();
-        upHeld();
-    }
-
-    //If button wasn't held proceed as normal
-    if(buttonReleased && buttonHeldTime < 100){
-        buttonReset();
-        if(device->getState()==DeviceState::MENU || device->getState()==DeviceState::RECORDS){
-            if(ui->display->currentRow()!=0){
-                ui->display->setCurrentRow(ui->display->currentRow()-1);
-            }
+    if(device->getState()==DeviceState::MENU || device->getState()==DeviceState::RECORDS){
+        if(ui->display->currentRow()!=0){
+            ui->display->setCurrentRow(ui->display->currentRow()-1);
         }
-        if(device->getState()==DeviceState::SESSION_SELECT) {
-            //If we're in user designated
-            if(currentGroup==groups.count()-1){
-                //Don't load anything if no sessions exist
-                if(currentSession==-1){
+    }
+    if(device->getState()==DeviceState::SESSION_SELECT) {
+        //If we're in user designated
+        if(currentGroup==groups.count()-1){
+            //Don't load anything if no sessions exist
+            if(currentSession==-1){
+                return;
+            }
+            else{ //Otherwise get the next session from the db
+                int temp = currentSession;
+                ++currentSession;
+                Session* userDesig = getUserSession();
+                if(userDesig==nullptr){
+                    currentSession = temp;
                     return;
                 }
-                else{ //Otherwise get the next session from the db
-                    int temp = currentSession;
-                    ++currentSession;
-                    Session* userDesig = getUserSession();
-                    if(userDesig==nullptr){
-                        currentSession = temp;
-                        return;
-                    }
-                    displaySession(userDesig);
-                    return;
-                }
+                displaySession(userDesig);
+                return;
             }
-            else if(currentSession<sessions.count()-1) { //Triggers if not in user desig
-                currentSession+=1;
-            }
-
-            clearGraph();
-            colourGraphNumber(currentSession);
-            clearSessions();
-            colourSession(currentSession);
-
         }
-        else if(device->getState()==DeviceState::SESSION){
-            device->increaseIntensity();
+        else if(currentSession<sessions.count()-1) { //Triggers if not in user desig
+            currentSession+=1;
         }
+
+        clearGraph();
+        colourGraphNumber(currentSession);
+        clearSessions();
+        colourSession(currentSession);
+
+    }
+    else if(device->getState()==DeviceState::SESSION){
+        device->increaseIntensity();
     }
 }
 
@@ -545,53 +526,33 @@ void MainWindow::downPressed() {
             //If in session select it navigates Session Type
             //If in session it decreases intensity
 
-    if(!buttonReleased && !(buttonTimer->isActive())){
-        connect(buttonTimer, &QTimer::timeout, this, &MainWindow::downPressed);
-        buttonTimer->start(20);
-        return;
+    if(device->getState()==DeviceState::MENU || device->getState()==DeviceState::RECORDS){
+        if(ui->display->currentRow()!=ui->display->count()-1){
+            ui->display->setCurrentRow(ui->display->currentRow()+1);
+        }
     }
-
-    if(!buttonReleased){
-        ++buttonHeldTime;
-    }
-
-    //Consider button "held" after 2 seconds
-    if(buttonHeldTime>=100){
-        buttonReset();
-        downHeld();
-    }
-
-    //If button wasn't held proceed as normal
-    if(buttonReleased && buttonHeldTime < 100){
-        buttonReset();
-        if(device->getState()==DeviceState::MENU || device->getState()==DeviceState::RECORDS){
-            if(ui->display->currentRow()!=ui->display->count()-1){
-                ui->display->setCurrentRow(ui->display->currentRow()+1);
+    else if(device->getState()==DeviceState::SESSION_SELECT) {
+        if(currentGroup==groups.count()-1){
+            if(currentSession==-1){
+                return;
+            }
+            else if(currentSession>0){
+                --currentSession;
+                Session* userDesig = getUserSession();
+                displaySession(userDesig);
+                return;
             }
         }
-        else if(device->getState()==DeviceState::SESSION_SELECT) {
-            if(currentGroup==groups.count()-1){
-                if(currentSession==-1){
-                    return;
-                }
-                else if(currentSession>0){
-                    --currentSession;
-                    Session* userDesig = getUserSession();
-                    displaySession(userDesig);
-                    return;
-                }
-            }
-            else if(currentSession>0) {
-                currentSession-=1;
-            }
-            clearGraph();
-            colourGraphNumber(currentSession);
-            clearSessions();
-            colourSession(currentSession);
+        else if(currentSession>0) {
+            currentSession-=1;
         }
-        else if(device->getState()==DeviceState::SESSION){
-            device->decreaseIntensity();
-        }
+        clearGraph();
+        colourGraphNumber(currentSession);
+        clearSessions();
+        colourSession(currentSession);
+    }
+    else if(device->getState()==DeviceState::SESSION){
+        device->decreaseIntensity();
     }
 }
 
@@ -733,20 +694,6 @@ void MainWindow::confirmPressed() {
 
 //HELD
 
-//Executes if up has been held
-void MainWindow::upHeld() {
-    //Only works during session select
-    //Increases intensity for every second held
-
-}
-
-//Executes if down has been held
-void MainWindow::downHeld() {
-    //Only works during session select
-        //Decreases intensity for every second held
-
-}
-
 //Executes if the power button has been held
 void MainWindow::powerHeld() {
     //If device off it turns on
@@ -757,8 +704,11 @@ void MainWindow::powerHeld() {
     if(device->getState()==DeviceState::OFF){
         powerOn();
     }
-    else{
+    else if(device->getState()==DeviceState::SESSION){
         //This is temporary. Normally we'd need to go through the soft off process
+        softOff();
+    }
+    else{
         powerOff();
     }
 

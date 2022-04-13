@@ -102,7 +102,7 @@ QVector<Session*>* Device::getRecords(){
 }
 
 //Adds a new user defined session to the db
-bool Device::createUserSession(const QString&, const QString&, const int, const bool){
+bool Device::createUserSession(const QString&, const int, const int, const bool){
     //Creates session object and tells database to add it
 }
 
@@ -128,7 +128,7 @@ bool Device::storeSession(){
 //SESSION MANIP
 
 //Creates a session
-void Device::createSession(int selectedGroup, int selectedType){
+void Device::createSession(const int selectedGroup, const int selectedType){
     //Create session object
         //if given string is default value it is a USER DEFINED session
     QString groupString;

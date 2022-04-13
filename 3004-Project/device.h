@@ -34,12 +34,12 @@ public:
 
     //DATABASE MANIP
     QVector<Session*>* getRecords();
-    bool createUserSession(const QString&, const QString&, const int, const bool);
+    bool createUserSession(const QString&, const int, const int, const bool);
     Session* getUserSession(const int);
     bool storeSession();
 
     //SESSION MANIP
-    void createSession(int, int); //DONE
+    void createSession(const int, const int); //DONE
     void acceptUserSession(Session*);
     void increaseIntensity();
     void decreaseIntensity();
