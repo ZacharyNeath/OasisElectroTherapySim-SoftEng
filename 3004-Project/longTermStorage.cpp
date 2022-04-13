@@ -136,8 +136,38 @@ bool LongTermStorage::loadUserSessions(){
 
 //Add given session to user session file
 bool LongTermStorage::saveUserSession(Session* s){
+    //Push record to collection
+    userSessions.push_back(new Session(*s));
 
-    return false;
+    //Create QJsonArray out of collection
+    QJsonArray content;
+    for(auto v : records){
+        //Create JsonObject out of each session record and push to array
+        QJsonObject o;
+        o.insert("CES Mode",v->getCES());
+        o.insert("Duration",v->timeElapsed());
+        o.insert("Time", v->getDuration());
+        o.insert("Frequency",v->getFrequency());
+        o.insert("Group",v->getGroup());
+        o.insert("Type",v->getType());
+        content.push_back(o);
+    }
+
+    //Write JsonObject to file
+    QJsonDocument document;
+    document.setArray(content);
+
+    QFile file(USER_SESSION_FILE);
+    if( file.open(QFile::WriteOnly) ){
+        qInfo() << "Info: ------- successfully opened file: "<<USER_SESSION_FILE;
+        file.write(document.toJson());
+        file.close();
+    }else{
+        qInfo() << "Error: ------- writing to file: "<<USER_SESSION_FILE;
+        return false;
+    }
+
+    return true;
 }
 
 //END LOAD/SAVE

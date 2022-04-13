@@ -320,7 +320,7 @@ void MainWindow::displayRecords(QVector<Session*>* sessions){
 
 //Displays current session information on UI
 void MainWindow::displaySession(Session* session){
-    delete session;
+
 }
 
 //Displays initial menu between session selection and record viewing
