@@ -10,8 +10,8 @@
     },
     {
         "CES Mode": true,
-        "Date": "Sat Mar 12 19:00:30 2022",
-        "Duration": 45,
+        "Date": "Tue Mar 15 19:00:30 2022",
+        "Duration": 25,
         "Frequency": 11,
         "Group": "45 Minutes",
         "Time": 45,
@@ -19,8 +19,8 @@
     },
     {
         "CES Mode": true,
-        "Date": "Tue Mar 15 19:00:30 2022",
-        "Duration": 25,
+        "Date": "Sat Mar 12 19:00:30 2022",
+        "Duration": 45,
         "Frequency": 11,
         "Group": "45 Minutes",
         "Time": 45,

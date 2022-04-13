@@ -67,7 +67,7 @@ bool LongTermStorage::loadRecords(){
 //Add given session record to record file
 bool LongTermStorage::saveRecord(Session* s){
     //Push record to collection
-    records.push_back(new Session(*s));
+    records.push_front(new Session(*s));
 
     //Create QJsonArray out of collection
     QJsonArray content;

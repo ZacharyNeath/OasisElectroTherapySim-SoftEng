@@ -123,9 +123,9 @@ void MainWindow::connectionTest(){
 //STORAGE QUERYING
 
 //Gets records stored on device
-QVector<Session*> MainWindow::getRecords(){
+QVector<Session*>* MainWindow::getRecords(){
     //Ask the device to get all (or perhaps limit it to like 20) records from storage
-    return device->getRecords();;
+    return device->getRecords();
 }
 
 //Get information for a specific user session
