@@ -3,7 +3,6 @@
 *.o
 build-3004-Project-Desktop-Debug/.qmake.stash
 build-3004-Project-Desktop-Debug/3004-Project
-build-3004-Project-Desktop-Debug/Makefile
 build-3004-Project-Desktop-Debug/moc_device.cpp
 build-3004-Project-Desktop-Debug/moc_mainwindow.cpp
 build-3004-Project-Desktop-Debug/moc_predefs.h
