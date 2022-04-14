@@ -43,6 +43,7 @@ Session::~Session(){
 
 //END CONST & DEST
 
+
 //UTILITY
 
 //Updates the current duration
@@ -56,6 +57,7 @@ int Session::timeLeft(){
 }
 
 //END UTILITY
+
 
 //GETTERS
 
@@ -110,6 +112,7 @@ bool Session::isRecording(){
 }
 
 //END GETTERS
+
 
 //SETTERS
 

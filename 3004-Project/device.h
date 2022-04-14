@@ -22,15 +22,15 @@ public:
     void updateStatus();
 
     //STATE CHANGES
-    void powerOn(); //DONE
+    void powerOn();
     void recordView();
-    void enterSessionSelect(); //DONE
-    void connectionTest(); //DONE
+    void enterSessionSelect();
+    void connectionTest();
     void startSession();
     void endSession();
     void pauseSession();
     void softOff();
-    void powerOff(); //DONE
+    void powerOff();
 
     //DATABASE MANIP
     QVector<Session*>* getRecords();
@@ -39,7 +39,7 @@ public:
     bool storeSession();
 
     //SESSION MANIP
-    void createSession(const int, const int); //DONE
+    void createSession(const int, const int);
     void acceptUserSession(Session*);
     void increaseIntensity();
     void decreaseIntensity();
@@ -49,14 +49,14 @@ public:
     int getIntensity();
     void killSession();
 
-    //GETTERS //DONE
+    //GETTERS
     DeviceState getState();
     double getBatteryLevel();
     int getConnectionLevel();
     bool isBatteryIn();
     bool batteryCritical();
 
-    //SETTERS //DONE
+    //SETTERS
     void setConnection(const int);
     void setBattery(const bool);
 
