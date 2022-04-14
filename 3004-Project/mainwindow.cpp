@@ -21,14 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     connectElements();
     sessionSelectInitialization();
-
-    //SESSION RECORD TESTING
-    //QVector<Session*> sessionsVect;
-    //sessionsVect.push_back(s1);
-    //sessionsVect.push_back(s2);
-    //sessionsVect.push_back(s3);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -40,13 +32,11 @@ MainWindow::~MainWindow()
 
 //END CONST & DEST
 
+
 //STATE UPDATES
 
 //The power on process for the unit
 void MainWindow::powerOn(){
-    // Encapsulate all powering on stuff here
-    // Probably just turn on basic stuff on allow the user
-    // To choose between the record window and doing a session
     ui->powerIndicatorLabel->setStyleSheet("color: rgb(138, 226, 52)");
     ui->display->setStyleSheet("background-color: rgb(255, 255, 255);");
 
@@ -58,9 +48,6 @@ void MainWindow::powerOn(){
 
 //The power off process for the unit
 void MainWindow::powerOff(){
-    // Encapsulate all powering off stuff
-    // updates UI
-    // Ends program
     ui -> powerIndicatorLabel->setStyleSheet("color: rgb(85, 87, 83);");
     clearMenu();
     clearGraph();
@@ -72,26 +59,22 @@ void MainWindow::powerOff(){
 
 //Tells unit to enter soft off mode
 void MainWindow::softOff(){
-    // Can be called from battery being too low
-    // Can be called from the power button being held
-    // Tells unit to enter soft off state
     device->softOff();
 }
 
 //Tells the device to enter session select mode
 void MainWindow::enterSessionSelect(){
-    // Update display
     clearMenu();
     clearGraph();
     device->enterSessionSelect();
 }
 
-//Tells the device to enter Session state
+//Tells the device to enter Session state, starts the timer, and links it to the updateStatus func
 void MainWindow::startSession(){
-    //Also starts the timer and links it to the updateStatus func
     clearGraph();
     displayIntensity();
     QTimer* sessionTimer = device->getSessionTimer();
+
     //If session was already underway resume it
     if(!(sessionTimer->isActive())){
         connect(sessionTimer, &QTimer::timeout, this, &MainWindow::updateStatus);
@@ -100,19 +83,14 @@ void MainWindow::startSession(){
     device->startSession();
 }
 
-//Triggered when the session ends to do things necessary to when a session ends
+//Triggered when the session ends and tells Device session is over
 void MainWindow::endSession(){
-    // Does any UI updating if necessary
-    // Tells Device session is over
-    // Then calls SoftOff
     device->endSession();
     softOff();
 }
 
-//Called when a session has been selected
+//Tells device to enter connection test mode and updates UI to reflect the current test
 void MainWindow::connectionTest(){
-    //tells device to enter connection test mode
-    //Update UI to reflect the current test
     device->connectionTest();
     clearGraph();
     displayConnection();
@@ -120,17 +98,16 @@ void MainWindow::connectionTest(){
 
 //END STATE UPDATES
 
+
 //STORAGE QUERYING
 
 //Gets records stored on device
 QVector<Session*>* MainWindow::getRecords(){
-    //Ask the device to get all (or perhaps limit it to like 20) records from storage
     return device->getRecords();
 }
 
 //Get information for a specific user session
 Session* MainWindow::getUserSession(){
-    //Find highlighted label and query device for detail relating to that session
     Session* sess = device->getUserSession(currentSession);
 
     if(sess==nullptr){
@@ -142,13 +119,11 @@ Session* MainWindow::getUserSession(){
 
 //END STORAGE QUERYING
 
+
 //UI UPDATES
 
 //Updates graph to show current battery level
 void MainWindow::displayBattery(){
-    //Query device for battery level
-    // The graph is numbers 1-8 so:
-        //numToLightUp = floor(batteryLevel/12.5)
     double battery = device->getBatteryLevel();
     int numToLight = (int)(ceil((battery/12.5)))-1;
 
@@ -159,7 +134,6 @@ void MainWindow::displayBattery(){
 
 //Update graph to show current intensity
 void MainWindow::displayIntensity(){
-    //Query device for intensity level
     int intensity = device->getIntensity()-1;
     for(int i = 0; i<=intensity; i++){
         colourGraphNumber(i);
@@ -325,7 +299,6 @@ void MainWindow::displaySession(Session* session){
 
 //Displays initial menu between session selection and record viewing
 void MainWindow::displayMenu(){
-    //Populates the display options
     QListWidgetItem *session = new QListWidgetItem;
     session->setText("Select a session");
     ui->display->insertItem(0, session);
@@ -380,6 +353,7 @@ void MainWindow::clearMenu(){
 
 //END UI UPDATES
 
+
 //HELPERS
 
 //Helper to form all connections
@@ -429,6 +403,7 @@ void MainWindow::sessionSelectInitialization() {
 }
 
 //END HELPERS
+
 
 //SLOTS
 
@@ -687,8 +662,6 @@ void MainWindow::confirmPressed() {
 
 }
 
-
-
 //END PRESSED
 
 
@@ -705,7 +678,6 @@ void MainWindow::powerHeld() {
         powerOn();
     }
     else if(device->getState()==DeviceState::SESSION){
-        //This is temporary. Normally we'd need to go through the soft off process
         softOff();
     }
     else{
@@ -729,6 +701,7 @@ void MainWindow::confirmHeld() {
 
 //END HELD
 
+
 //RELEASED
 
 void MainWindow::buttonRelease(){
@@ -738,6 +711,7 @@ void MainWindow::buttonRelease(){
 }
 
 //END RELEASED
+
 
 //COMBO UPDATE
 
@@ -773,5 +747,6 @@ void MainWindow::batteryChange() {
 }
 
 //END COMBO UPDATE
+
 
 //END SLOTS

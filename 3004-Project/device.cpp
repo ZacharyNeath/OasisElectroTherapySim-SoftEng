@@ -1,5 +1,6 @@
 #include "device.h"
 
+
 //CONST & DEST
 const double Device::MAX_POWER = 100;
 
@@ -19,13 +20,11 @@ Device::~Device(){
 
 //END CONST & DEST
 
+
 //DRIVER
 
 //Updates status of device depending on state and session info
 void Device::updateStatus(){
-    //imagine this will be called once per timestep
-        // timestep = 1 second/minute. Basically however often we update
-    // If state is session then update battery level, timers, and counters
     if(state == DeviceState::SOFT_OFF){
         decreaseIntensity();
     }
@@ -37,6 +36,7 @@ void Device::updateStatus(){
 }
 
 //END DRIVER
+
 
 //STATE CHANGES
 
@@ -63,7 +63,6 @@ void Device::startSession(){
 //Called at the end of the session. Finalizes session info
 void Device::endSession(){
     //Add session to storage if recording is on
-        // Probably doesn’t do much for now
     if(currentSession->isRecording()){
         storeSession();
     }
@@ -78,7 +77,6 @@ void Device::connectionTest(){
 
 //Pauses current session
 void Device::pauseSession(){
-    // currently pausing just means we enter connection test state
     state = DeviceState::CONNECTION_TEST;
 }
 
@@ -93,11 +91,12 @@ void Device::powerOff(){
 
 //END STATE CHANGES
 
+
 //DATABASE MANIP
 
 //Returns list of records
 QVector<Session*>* Device::getRecords(){
-    //Queries database for all/certain number of latest records
+    //Queries database for all latest records
     return longTermStorage->getRecords();
 }
 
@@ -124,12 +123,11 @@ bool Device::storeSession(){
 
 //END DATABASE MANIP
 
+
 //SESSION MANIP
 
 //Creates a session
 void Device::createSession(const int selectedGroup, const int selectedType){
-    //Create session object
-        //if given string is default value it is a USER DEFINED session
     QString groupString;
     QString typeString;
     int duration;
@@ -207,6 +205,7 @@ void Device::createSession(const int selectedGroup, const int selectedType){
     currentSession = new Session(groupString, typeString, duration, frequency, ces);
 }
 
+//Creates session object out of existing session object
 void Device::acceptUserSession(Session* userSession){
     currentSession = userSession;
 }
@@ -229,14 +228,11 @@ void Device::decreaseIntensity(){
 
 //Turns on recording for current session
 void Device::turnOnRecording(){
-    //tells session that it will be recorded
     currentSession->setRecording(true);
 }
 
 //Gets remaining time in session
 int Device::getSessionRemainder(){
-    //calculate remaining session time and return it.
-    // used to determine if session is done
     int remainder = currentSession->getDuration() - currentSession->timeElapsed();
     return remainder;
 }
@@ -260,6 +256,7 @@ void Device::killSession(){
 }
 
 //END SESSION MANIP
+
 
 //GETTERS
 
@@ -306,6 +303,7 @@ void Device::setBattery(const bool b){
 }
 
 //END SETTERS
+
 
 //HELPERS
 

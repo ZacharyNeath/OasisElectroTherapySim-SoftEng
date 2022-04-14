@@ -9,16 +9,6 @@ LongTermStorage::LongTermStorage(){
     loadRecords();
     loadUserSessions();
 
-
-    //TESTING FOR SAVING RECORD
-
-    //when LTS is contructed adds a test session to the json file right away
-    //feel free to add more/change it to test
-    //also let me know if it actually saves to a file when session is complete
-
-    //Session* s = new Session("20 Minutes","100Hz",20,100,true);  //uncomment these lines
-    //saveRecord(s);                                               //
-
     qInfo()<< "    --LongTermStorage Ctor";
 }
 
@@ -60,7 +50,6 @@ bool LongTermStorage::loadRecords(){
         QJsonObject o = v.toObject();
         Session* s = createSession(o["Group"].toString(), o["Type"].toString(), o["Time"].toInt(), o["Frequency"].toInt(), o["CES Mode"].toBool(), o["Date"].toString(), o["Duration"].toInt());
         records.push_back(s);
-        //qInfo()<< s->getGroup() << " " << s->getType() << " " << s->getDuration() << " " << s->getFrequency()<< " " << s->getCES()<< " ";
     }
 
     return true;
@@ -126,7 +115,6 @@ bool LongTermStorage::loadUserSessions(){
         QJsonObject o = v.toObject();
         Session* s = new Session(o["Group"].toString(),o["Type"].toString(),o["Duration"].toInt(),o["Frequency"].toInt(),o["CES Mode"].toBool());
         userSessions.push_back(s);
-        //qInfo()<< s->getGroup() << " " << s->getType() << " " << s->getDuration() << " " << s->getFrequency()<< " " << s->getCES()<< " ";
     }
 
     qInfo() << content;
