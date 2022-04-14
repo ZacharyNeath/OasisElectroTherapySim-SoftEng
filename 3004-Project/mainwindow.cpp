@@ -457,13 +457,11 @@ void MainWindow::updateStatus() {
     }
 
     if(device->getState()==DeviceState::SOFT_OFF && device->getIntensity()==0){
-        qInfo() << "Turning off!";
         powerOff();
         device->killSession();
         return;
     }
     else if(device->getState()==DeviceState::SOFT_OFF){ //device in soft off
-        qInfo() << "Soft Off";
         clearGraph();
         displayIntensity();
     }
@@ -473,11 +471,9 @@ void MainWindow::updateStatus() {
             graphFlag = !graphFlag;
         }
         if(graphFlag){
-            qInfo() << "Displaying Intensity";
             displayIntensity();
         }
         else{
-            qInfo() << "Displaying Battery";
             displayBattery();
         }
     }
@@ -593,8 +589,6 @@ void MainWindow::powerPressed(){
         ++buttonHeldTime;
     }
 
-    qInfo() << "Time: " << buttonHeldTime;
-    qInfo() << "Released? " << buttonReleased;
     //Consider button "held" after 2 seconds
     if(buttonHeldTime>=100){
         buttonReset();

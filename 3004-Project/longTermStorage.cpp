@@ -8,12 +8,9 @@ const QString LongTermStorage::USER_SESSION_FILE = "../3004-Project/Data/user_se
 LongTermStorage::LongTermStorage(){
     loadRecords();
     loadUserSessions();
-
-    qInfo()<< "    --LongTermStorage Ctor";
 }
 
 LongTermStorage::~LongTermStorage(){
-    qInfo()<< "    --LongTermStorage dtor";
     for(int i = 0; i<records.count(); i++){
         delete records[i];
     }
@@ -33,11 +30,9 @@ bool LongTermStorage::loadRecords(){
     QFile file(RECORD_FILE);
     QString value;
     if( file.open( QFile::ReadOnly )){
-        qInfo() << "Info: ------- successfully opened file: "<<RECORD_FILE;
         value = file.readAll();
         file.close();
     } else {
-        qInfo() << "Error: ------- reading file: "<<RECORD_FILE;
         return false;
     }
     QJsonDocument document = QJsonDocument::fromJson(value.toUtf8());
@@ -81,11 +76,9 @@ bool LongTermStorage::saveRecord(Session* s){
 
     QFile file(RECORD_FILE);
     if( file.open(QFile::WriteOnly) ){
-        qInfo() << "Info: ------- successfully opened file: "<<RECORD_FILE;
         file.write(document.toJson());
         file.close();
     }else{
-        qInfo() << "Error: ------- writing to file: "<<RECORD_FILE;
         return false;
     }
 
@@ -98,11 +91,9 @@ bool LongTermStorage::loadUserSessions(){
     QFile file(USER_SESSION_FILE);
     QString value;
     if( file.open( QFile::ReadOnly )){
-        qInfo() << "Info: ------- successfully opened file: "<<USER_SESSION_FILE;
         value = file.readAll();
         file.close();
     } else {
-        qInfo() << "Error: ------- reading file: "<<USER_SESSION_FILE;
         return false;
     }
     QJsonDocument document = QJsonDocument::fromJson(value.toUtf8());
@@ -116,8 +107,6 @@ bool LongTermStorage::loadUserSessions(){
         Session* s = new Session(o["Group"].toString(),o["Type"].toString(),o["Duration"].toInt(),o["Frequency"].toInt(),o["CES Mode"].toBool());
         userSessions.push_back(s);
     }
-
-    qInfo() << content;
 
     return true;
 }
@@ -147,11 +136,9 @@ bool LongTermStorage::saveUserSession(Session* s){
 
     QFile file(USER_SESSION_FILE);
     if( file.open(QFile::WriteOnly) ){
-        qInfo() << "Info: ------- successfully opened file: "<<USER_SESSION_FILE;
         file.write(document.toJson());
         file.close();
     }else{
-        qInfo() << "Error: ------- writing to file: "<<USER_SESSION_FILE;
         return false;
     }
 

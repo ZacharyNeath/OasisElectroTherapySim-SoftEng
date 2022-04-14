@@ -114,10 +114,9 @@ Session* Device::getUserSession(const int id){
 //Puts current session in long term storage
 bool Device::storeSession(){
     if (longTermStorage->saveRecord(currentSession)){
-        qInfo()<<"Stored Session Successfully";
         return true;
     } else {
-        qInfo()<<"Failed to store Session to storage"; return false;
+        return false;
     }
 }
 
@@ -194,13 +193,6 @@ void Device::createSession(const int selectedGroup, const int selectedType){
         default:
             return;
     }
-
-    qInfo("\nCreating session:");
-    qInfo("Group:     %s", qUtf8Printable(groupString));
-    qInfo("Type:      %s", qUtf8Printable(typeString));
-    qInfo("Duration:  %d minutes", duration);
-    qInfo("Frequency: %dHz", frequency);
-    qInfo("CES:       %s\n", ces?"Short-Pulse":"50% Duty Cycle");
 
     currentSession = new Session(groupString, typeString, duration, frequency, ces);
 }
