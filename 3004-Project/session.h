@@ -11,7 +11,8 @@ class Session : public QObject
     Q_OBJECT
 public:
     //CONST & DEST
-    Session(const QString&, const QString&, const int, const int, const bool);
+    Session(const QString&, const QString&, const int, const int, const bool, const QDateTime = QDateTime::currentDateTime(), const int=0);
+    Session(const Session&);
     ~Session();
 
     //UTILITY
@@ -30,10 +31,9 @@ public:
     bool getCES();
     bool isRecording();
 
-
     //SETTERS
     void setIntensity(int);
-    void setRecording();
+    void setRecording(const bool);
 
 private:
     QTimer* timer;

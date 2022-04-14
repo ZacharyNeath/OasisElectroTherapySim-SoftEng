@@ -17,12 +17,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     device.cpp \
+    longTermStorage.cpp \
     main.cpp \
     mainwindow.cpp \
     session.cpp
 
 HEADERS += \
     device.h \
+    longTermStorage.h \
     mainwindow.h \
     session.h
 
@@ -33,3 +35,7 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    Data/records.json \
+    Data/user_sessions.json

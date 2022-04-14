@@ -1,0 +1,83 @@
+[
+    {
+        "CES Mode": true,
+        "Date": "Wed Apr 13 21:01:06 2022",
+        "Duration": 11,
+        "Frequency": 8,
+        "Group": "3 Hours",
+        "Time": 180,
+        "Type": "Theta"
+    },
+    {
+        "CES Mode": true,
+        "Date": "Wed Apr 13 20:56:41 2022",
+        "Duration": 45,
+        "Frequency": 11,
+        "Group": "45 Minutes",
+        "Time": 45,
+        "Type": "Alpha"
+    },
+    {
+        "CES Mode": true,
+        "Date": "Wed Apr 13 20:58:04 2022",
+        "Duration": 1,
+        "Frequency": 3,
+        "Group": "20 Minutes",
+        "Time": 20,
+        "Type": "MET"
+    },
+    {
+        "CES Mode": false,
+        "Date": "Wed Apr 13 20:51:46 2022",
+        "Duration": 5,
+        "Frequency": 100,
+        "Group": "45 Minutes",
+        "Time": 45,
+        "Type": "Alpha"
+    },
+    {
+        "CES Mode": false,
+        "Date": "Wed Apr 13 20:33:07 2022",
+        "Duration": 41,
+        "Frequency": 100,
+        "Group": "45 Minutes",
+        "Time": 45,
+        "Type": "Alpha"
+    },
+    {
+        "CES Mode": true,
+        "Date": "Wed Apr 13 20:13:07 2022",
+        "Duration": 42,
+        "Frequency": 11,
+        "Group": "45 Minutes",
+        "Time": 45,
+        "Type": "Alpha"
+    },
+    {
+        "CES Mode": true,
+        "Date": "Sun Apr 10 21:00:01 2022",
+        "Duration": 150,
+        "Frequency": 90,
+        "Group": "3 Hours",
+        "Time": 180,
+        "Type": "Beta"
+    },
+    {
+        "CES Mode": true,
+        "Date": "Tue Mar 15 19:00:30 2022",
+        "Duration": 25,
+        "Frequency": 11,
+        "Group": "45 Minutes",
+        "Time": 45,
+        "Type": "Alpha"
+    },
+    {
+        "CES Mode": true,
+        "Date": "Sat Mar 12 19:00:30 2022",
+        "Duration": 45,
+        "Frequency": 11,
+        "Group": "45 Minutes",
+        "Time": 45,
+        "Type": "Alpha"
+    }
+]
