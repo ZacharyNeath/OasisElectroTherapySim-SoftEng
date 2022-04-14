@@ -208,7 +208,7 @@ void Device::createSession(const int selectedGroup, const int selectedType){
 }
 
 void Device::acceptUserSession(Session* userSession){
-    currentSession = userSession;
+    currentSession = new Session(*userSession);
 }
 
 //Increases session intensity by 1

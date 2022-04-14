@@ -320,6 +320,44 @@ void MainWindow::displayRecords(QVector<Session*>* sessions){
 
 //Displays current session information on UI
 void MainWindow::displaySession(Session* session){
+    int frequency = session->getFrequency();
+    bool ces = session->getCES();
+    int freqNum = 0;
+
+    switch(frequency){
+        case 3:
+            freqNum = 0;
+            break;
+        case 5:
+            freqNum = 2;
+            break;
+        case 8:
+            freqNum = 3;
+            break;
+        case 11:
+            freqNum = 4;
+            break;
+        case 15:
+            freqNum = 5;
+            break;
+        case 22:
+            freqNum = 6;
+            break;
+        case 100:
+            freqNum = 7;
+            break;
+    }
+
+    colourGraphNumber(currentSession);
+    colourSession(freqNum);
+    if(ces){
+        ui->shortPulseLabel->setStyleSheet("color: rgb(0,253,0);");
+        ui->dutyCycleLabel->setStyleSheet("color: rgb(85, 87, 83);");
+    }
+    else{
+        ui->shortPulseLabel->setStyleSheet("color: rgb(85, 87, 83);");
+        ui->dutyCycleLabel->setStyleSheet("color: rgb(0,253,0);");
+    }
 
 }
 
@@ -486,8 +524,7 @@ void MainWindow::upPressed() {
         }
     }
     if(device->getState()==DeviceState::SESSION_SELECT) {
-        //If we're in user designated
-        if(currentGroup==groups.count()-1){
+        if(currentGroup==groups.count()-1){//If we're in user designated
             //Don't load anything if no sessions exist
             if(currentSession==-1){
                 return;
@@ -500,6 +537,8 @@ void MainWindow::upPressed() {
                     currentSession = temp;
                     return;
                 }
+                clearGraph();
+                clearSessions();
                 displaySession(userDesig);
                 return;
             }
@@ -539,6 +578,8 @@ void MainWindow::downPressed() {
             else if(currentSession>0){
                 --currentSession;
                 Session* userDesig = getUserSession();
+                clearGraph();
+                clearSessions();
                 displaySession(userDesig);
                 return;
             }
@@ -596,6 +637,11 @@ void MainWindow::powerPressed(){
                 currentGroup = 0;
                 currentSession = 0;
             }
+
+            if(currentGroup==groups.count()-1){
+                currentSession = 0;
+            }
+
             clearGroup();
             clearSessions();
             clearGraph();
@@ -704,9 +750,12 @@ void MainWindow::powerHeld() {
     if(device->getState()==DeviceState::OFF){
         powerOn();
     }
-    else if(device->getState()==DeviceState::SESSION){
-        //This is temporary. Normally we'd need to go through the soft off process
+    else if(device->getState()==DeviceState::SESSION || device->getState()==DeviceState::CONNECTION_TEST){
+        device->endSession();
         softOff();
+    }
+    else if(device->getState()==DeviceState::SOFT_OFF){
+
     }
     else{
         powerOff();

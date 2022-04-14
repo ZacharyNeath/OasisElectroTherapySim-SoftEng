@@ -1,7 +1,7 @@
 ﻿#include "longTermStorage.h"
 
 const QString LongTermStorage::RECORD_FILE = "../3004-Project/Data/records.json";
-const QString LongTermStorage::USER_SESSION_FILE = "../3004-Project/Data/records.json";
+const QString LongTermStorage::USER_SESSION_FILE = "../3004-Project/Data/user_sessions.json";
 
 //CTOR & DTOR
 
@@ -185,7 +185,7 @@ Session* LongTermStorage::getUserSession(const int id){
     if(id > userSessions.size()-1)
             return nullptr;
     else{
-        return userSessions.at(id);
+        return userSessions[id];
     }
 }
 
